@@ -2,6 +2,6 @@
 {
     public enum ClassType
     {
-        A, B, Y, Z
+        One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Zero
     }
 }

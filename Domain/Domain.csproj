@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Lab_1\Adder.cs" />
     <Compile Include="Lab_1\AElement.cs" />
+    <Compile Include="Lab_1\Config.cs" />
     <Compile Include="Lab_1\Core.cs" />
     <Compile Include="Lab_1\CustomImage.cs" />
     <Compile Include="Lab_1\CustomImageHendler.cs" />

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using Domain.Lab_1.Enums;
@@ -10,24 +9,30 @@ namespace Domain.Lab_1
 {
     public class Perceptron
     {
-        private Core _core;
-        public const int XCount = 225;
-        private const int ACount = 90;
-        public const int RCount = 2;
+        private readonly Core _core;
+        public static int XCount;
+        private readonly int ACount;
+        public static int RCount;
         private readonly Dictionary<ClassType, int[]> classDictionary;
-        private string SerializationPath
+
+        public Perceptron(int rCount, int aCount, int xCount)
         {
-            get { return ConfigurationManager.AppSettings["json"]; }
-        }
-        
-        public Perceptron()
-        {
+            RCount = rCount;
+            ACount = aCount;
+            XCount = xCount;
+
             classDictionary = new Dictionary<ClassType, int[]>()
             {
-                {ClassType.A, new[] {0, 0}},
-                {ClassType.B, new[] {0, 1}},
-                {ClassType.Y, new[] {1, 0}},
-                {ClassType.Z, new[] {1, 1}}
+                {ClassType.Zero, new[] {0, 0, 0, 0}},
+                {ClassType.One, new[] {0, 0, 0, 1}},
+                {ClassType.Two, new[] {0, 0, 1, 0}},
+                {ClassType.Three, new[] {0, 0, 1, 1}},
+                {ClassType.Four, new[] {0, 1, 0, 0}},
+                {ClassType.Five, new[] {0, 1, 0, 1}},
+                {ClassType.Six, new[] {0, 1, 1, 0}},
+                {ClassType.Seven, new[] {0, 1, 1, 1}},
+                {ClassType.Eight, new[] {1, 0, 0, 0}},
+                {ClassType.Nine, new[] {1, 0, 0, 1}}
             };
 
             _core = new Core();
@@ -39,7 +44,7 @@ namespace Domain.Lab_1
             }
         }
 
-        public List<XElement> xElements
+        private List<XElement> xElements
         {
             get
             {
@@ -184,7 +189,13 @@ namespace Domain.Lab_1
 
             try
             {
-                perceptronJs = File.ReadAllText(SerializationPath);
+                if (!File.Exists(Config.SerializationPath))
+                {
+                    var file = File.Create(Config.SerializationPath);
+                    file.Close();
+                }
+
+                perceptronJs = File.ReadAllText(Config.SerializationPath);
             }
             catch (Exception)
             {
@@ -206,7 +217,7 @@ namespace Domain.Lab_1
             }
 
 
-            File.WriteAllText(SerializationPath, string.Empty);
+            File.WriteAllText(Config.SerializationPath, string.Empty);
             return false;
         }
 
@@ -256,9 +267,16 @@ namespace Domain.Lab_1
             }
 
             var x = (int)_aElements.Count / RCount;
+            var ranged = 0;
             for (int i = 0; i < RCount; i++)
             {
                 _core.rElements[i].Adder.AElements = _aElements.GetRange(i * x, x);
+                ranged = i*x + x;
+            }
+
+            if (ranged < ACount)
+            {
+                _core.rElements.Last().Adder.AElements.AddRange(_aElements.GetRange(ranged, ACount - ranged));
             }
         }
 
@@ -266,12 +284,12 @@ namespace Domain.Lab_1
         {
             var jsonPerceptron = JsonConvert.SerializeObject(_core.rElements);
 
-            File.WriteAllText(SerializationPath, jsonPerceptron);
+            File.WriteAllText(Config.SerializationPath, jsonPerceptron);
         }
 
         public void ClearMemory()
         {
-            File.WriteAllText(SerializationPath, string.Empty);
+            File.WriteAllText(Config.SerializationPath, string.Empty);
         }
     }
 }

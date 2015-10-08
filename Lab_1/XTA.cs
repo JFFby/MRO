@@ -17,8 +17,8 @@ namespace Lab_1
 
         private void InitGrids()
         {
-            var grids = new[] {dataGridView1, dataGridView2}; //reflection
-            for (int i = 0; i < Perceptron.RCount; i++)
+            var grids = new[] { dataGridView1, dataGridView2, dataGridView3, dataGridView4 }; //reflection
+            for (int i = 0; i < grids.Length; i++)
             {
                 var model = perceptron.XtaList(i).OrderBy(x => x.Number).ToList();
                 var colNames = model.Select(x => x.AElementId).OrderBy(x => x).Distinct();
@@ -28,7 +28,7 @@ namespace Lab_1
                 for (int j = 0; j < cols; j++)
                 {
                     var name = GetColName(colNames.ElementAt(j));
-                    grids[i].Columns.Add(name,name);
+                    grids[i].Columns.Add(name, name);
                 }
 
                 for (int j = 0; j < rows; j++)
@@ -48,7 +48,7 @@ namespace Lab_1
 
         private string GetColName(int j)
         {
-            return string.Format("A{0}",j);
+            return string.Format("A{0}", j);
         }
     }
 }

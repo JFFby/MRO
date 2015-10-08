@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -10,9 +9,8 @@ namespace Lab_1
 {
     public partial class Form1 : Form
     {
-        private Perceptron perceptron;
-        private const int stadyTrying = 10;
-        private CustomImageHendler imgHendler;
+        private readonly Perceptron perceptron;
+        private readonly CustomImageHendler imgHendler;
 
         private int Lenght { get { return (int)Math.Sqrt(Perceptron.XCount); } }
 
@@ -21,9 +19,9 @@ namespace Lab_1
             InitializeComponent();
             var watch = new Stopwatch();
             watch.Start();
+            perceptron = new Perceptron(Config.CountOfRElements, 90, 225);
             InitializeGrid();
-            perceptron = new Perceptron();
-            imgHendler = new CustomImageHendler(ConfigurationManager.AppSettings["imgFolder"],
+            imgHendler = new CustomImageHendler(Config.ImgFolder,
                 (b, c) => new CustomImage<ClassType>(b, c));
             watch.Stop();
             this.Text = string.Format("{0} | {1}", "DarkProgramming", watch.ElapsedMilliseconds);
@@ -120,7 +118,7 @@ namespace Lab_1
             {
                 var watc = new Stopwatch();
                 watc.Start();
-                var img = new CustomImage<ClassType>(Image.FromFile(openFileDialog1.FileName) as Bitmap, ClassType.A);
+                var img = new CustomImage<ClassType>(Image.FromFile(openFileDialog1.FileName) as Bitmap, ClassType.One);
                 SetImage(img);
                var classType = perceptron.DefineImage(img);
                 watc.Stop();
