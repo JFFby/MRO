@@ -27,12 +27,45 @@ namespace Domain.Lab_1
             }
         }
 
-        public List<CustomImage<ClassType>> GetRandomList()
+        private List<CustomImage<ClassType>> GetRandomList()
         {
             var list = new List<CustomImage<ClassType>>();
             for (int i = 0; i < ImageCounter; i++)
             {
                 list.Add(RandomImage());
+            }
+
+            images.SelectMany(x => x.Value).Cast<CustomImage<ClassType>>().ToList().ForEach(x => x.IsUsed = false);
+
+            return list;
+        }
+
+        public IList<CustomImage<ClassType>> GetImgImagesForLeaening()
+        {
+            switch (Config.LearningAlgoritm)
+            {
+                    case LearningAlgoritm.Random:
+                    return GetRandomList();
+                    case LearningAlgoritm.Queue:
+                    return GetQueuedList();
+                default:
+                    throw new ArgumentOutOfRangeException("Learning Algoritm");
+            }
+        }
+
+        private IList<CustomImage<ClassType>> GetQueuedList()
+        {
+            var list = new List<CustomImage<ClassType>>();
+            for (int i = 0; i < images.Max(x => x.Value.Count); i++)
+            {
+                foreach (var key in images.Keys)
+                {
+                    var img = images[key][i];
+                    if (img != null)
+                    {
+                        list.Add(img as CustomImage<ClassType>);
+                    }
+                }
             }
 
             return list;

@@ -37,8 +37,11 @@
             this.xToAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lToAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.clearPerceptronLearningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.learningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.checkThisSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -81,7 +84,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem});
+            this.menuToolStripMenuItem,
+            this.learningToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(866, 24);
@@ -128,16 +132,39 @@
             this.loadImageToolStripMenuItem.Text = "LoadImage";
             this.loadImageToolStripMenuItem.Click += new System.EventHandler(this.loadImageToolStripMenuItem_Click);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // clearPerceptronLearningToolStripMenuItem
             // 
             this.clearPerceptronLearningToolStripMenuItem.Name = "clearPerceptronLearningToolStripMenuItem";
             this.clearPerceptronLearningToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.clearPerceptronLearningToolStripMenuItem.Text = "Clear Perceptron Learning";
             this.clearPerceptronLearningToolStripMenuItem.Click += new System.EventHandler(this.clearPerceptronLearningToolStripMenuItem_Click);
+            // 
+            // learningToolStripMenuItem
+            // 
+            this.learningToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loopToolStripMenuItem,
+            this.checkThisSettingsToolStripMenuItem});
+            this.learningToolStripMenuItem.Name = "learningToolStripMenuItem";
+            this.learningToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.learningToolStripMenuItem.Text = "Learning";
+            // 
+            // loopToolStripMenuItem
+            // 
+            this.loopToolStripMenuItem.Name = "loopToolStripMenuItem";
+            this.loopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loopToolStripMenuItem.Text = "Loop";
+            this.loopToolStripMenuItem.Click += new System.EventHandler(this.loopToolStripMenuItem_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // checkThisSettingsToolStripMenuItem
+            // 
+            this.checkThisSettingsToolStripMenuItem.Name = "checkThisSettingsToolStripMenuItem";
+            this.checkThisSettingsToolStripMenuItem.Size = new System.Drawing.Size(177, 22);
+            this.checkThisSettingsToolStripMenuItem.Text = "Check This Settings";
+            this.checkThisSettingsToolStripMenuItem.Click += new System.EventHandler(this.checkThisSettingsToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -174,6 +201,9 @@
         private System.Windows.Forms.ToolStripMenuItem loadImageToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem clearPerceptronLearningToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem learningToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkThisSettingsToolStripMenuItem;
     }
 }
 

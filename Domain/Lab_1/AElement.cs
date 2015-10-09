@@ -37,11 +37,14 @@ namespace Domain.Lab_1
             get { return XElements.Any() == false; }
         }
 
-        public double L { get { return _l; } }
+        public double L
+        {
+            get { return _l; } set { _l = value; }
+        }
 
         public void AdjustL(int sign)
         {
-            _l += sign*delta;
+            _l += sign * delta;
         }
 
         public bool IsExcited { get { return XElements.Any(x => x.IsExcited); } }

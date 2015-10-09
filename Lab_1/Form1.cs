@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Domain.Lab_1;
 using Domain.Lab_1.Enums;
@@ -11,6 +13,7 @@ namespace Lab_1
     {
         private readonly Perceptron perceptron;
         private readonly CustomImageHendler imgHendler;
+        private TaskBar tb;
 
         private int Lenght { get { return (int)Math.Sqrt(Perceptron.XCount); } }
 
@@ -31,9 +34,9 @@ namespace Lab_1
         {
             var watch = new Stopwatch();
             watch.Start();
-           perceptron.Learninig(imgHendler.GetRandomList());
+            var result = perceptron.Learninig(imgHendler.GetImgImagesForLeaening());
             watch.Stop();
-            MessageBox.Show("Обачение закнчено " + watch.ElapsedMilliseconds);
+            MessageBox.Show("Обачение закнчено! (" + watch.ElapsedMilliseconds + ")" + result);
         }
 
         private void InitializeGrid()
@@ -130,6 +133,30 @@ namespace Lab_1
         {
             perceptron.ClearMemory();
             MessageBox.Show("Done");
+        }
+
+        private void loopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Task.Factory.StartNew(ThreadFn);
+        }
+
+        private void ThreadFn()
+        {
+            tb = new TaskBar();
+            tb.Show();
+            var watc = new Stopwatch();
+            watc.Start();
+            var result = perceptron.LearningLoop(imgHendler.GetImgImagesForLeaening, tb.SetPreogessBar);
+            watc.Stop();
+            tb.Close();
+            MessageBox.Show(result + " (" + watc.Elapsed + ")");
+        }
+
+        private void checkThisSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(
+                perceptron.ResultEvaluation(
+                    imgHendler.GetImgImagesForLeaening().GroupBy(x => x.Class).ToDictionary(x => x.Key, y => y.ToList())));
         }
     }
 }

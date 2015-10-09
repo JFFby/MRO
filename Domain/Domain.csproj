@@ -52,6 +52,7 @@
     <Compile Include="Lab_1\CustomImage.cs" />
     <Compile Include="Lab_1\CustomImageHendler.cs" />
     <Compile Include="Lab_1\Element.cs" />
+    <Compile Include="Lab_1\Enums\Class1.cs" />
     <Compile Include="Lab_1\Enums\ClassType.cs" />
     <Compile Include="Lab_1\ImgHendler.cs" />
     <Compile Include="Lab_1\Img.cs" />

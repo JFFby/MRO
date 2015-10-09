@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using Domain.Lab_1.Enums;
 using Newtonsoft.Json;
 
@@ -40,7 +42,7 @@ namespace Domain.Lab_1
             if (!ReadFromJson())
             {
                 InitElements();
-                SerializePerceptron();
+                SerializePerceptron(Config.SerializationPath);
             }
         }
 
@@ -67,7 +69,7 @@ namespace Domain.Lab_1
             }
         }
 
-        public string DefineImage(Img<ClassType> img)
+        public ClassType DefineImage(Img<ClassType> img)
         {
             AcceptIMage(img);
             var resul = GetBinaruCode();
@@ -76,7 +78,7 @@ namespace Domain.Lab_1
             return imgClass;
         }
 
-        private string DefineClass(int[] result)
+        private ClassType DefineClass(int[] result)
         {
             foreach (var key in classDictionary.Keys)
             {
@@ -92,16 +94,16 @@ namespace Domain.Lab_1
 
                 if (isEdintic == result.Count())
                 {
-                    return key.ToString();
+                    return key;
                 }
             }
 
-            return "undefined";
+            return ClassType.Undefined;
         }
 
         private int[] GetBinaruCode()
         {
-            int[] result = new int[_core.rElements.Count];
+            var result = new int[_core.rElements.Count];
             for (int i = 0; i < _core.rElements.Count; i++)
             {
                 var rValue = _core.rElements[i].Value;
@@ -121,7 +123,7 @@ namespace Domain.Lab_1
             var rs = xElements.Where(x => x.IsExcited).ToList();
         }
 
-        public void AdjustL(int rIndex, int sign)
+        private void AdjustL(int rIndex, int sign)
         {
             var els = _core.rElements[rIndex].Adder.AElements
                 .Where(x => x.IsExcited)
@@ -130,7 +132,7 @@ namespace Domain.Lab_1
             els.ForEach(x => x.AdjustL(sign));
         }
 
-        public List<XTAModel> XtaList(int i)
+        public IEnumerable<XTAModel> XtaList(int i)
         {
             var relement = _core.rElements[i];
             var xtaModel = new List<XTAModel>();
@@ -151,15 +153,17 @@ namespace Domain.Lab_1
             return xtaModel;
         }
 
-        public void Learninig(List<CustomImage<ClassType>> images)
+        public string Learninig(IEnumerable<CustomImage<ClassType>> images)
         {
+            LReset();
             foreach (var image in images)
             {
                 ExamineImage(image);
             }
 
             xElements.ForEach(x => x.Value = 0);
-            SerializePerceptron();
+            SerializePerceptron(Config.SerializationPath);
+            return ResultEvaluation(images.GroupBy(x => x.Class).ToDictionary(x => x.Key, y => y.ToList()));
         }
 
         private void ExamineImage(CustomImage<ClassType> image)
@@ -271,7 +275,7 @@ namespace Domain.Lab_1
             for (int i = 0; i < RCount; i++)
             {
                 _core.rElements[i].Adder.AElements = _aElements.GetRange(i * x, x);
-                ranged = i*x + x;
+                ranged = i * x + x;
             }
 
             if (ranged < ACount)
@@ -280,16 +284,74 @@ namespace Domain.Lab_1
             }
         }
 
-        private void SerializePerceptron()
+        private void SerializePerceptron(string path)
         {
             var jsonPerceptron = JsonConvert.SerializeObject(_core.rElements);
 
-            File.WriteAllText(Config.SerializationPath, jsonPerceptron);
+            File.WriteAllText(path, jsonPerceptron);
         }
 
         public void ClearMemory()
         {
             File.WriteAllText(Config.SerializationPath, string.Empty);
+        }
+
+        public string ResultEvaluation(IDictionary<ClassType, List<CustomImage<ClassType>>> imgDictionary)
+        {
+            var result = new StringBuilder();
+            var total = 0;
+            foreach (var key in imgDictionary.Keys)
+            {
+                int guessedImages = 0;
+                foreach (var customImage in imgDictionary[key])
+                {
+                    guessedImages += DefineImage(customImage) == key ? 1 : 0;
+                }
+
+                total += guessedImages;
+                result.Append(string.Format("\n{0}: {1}", key,
+                    ((double)guessedImages * 100 / imgDictionary[key].Count).ToString("F")));
+            }
+
+            result.Append(string.Format("\nВсего: {0}",
+                ((double)total * 100 / imgDictionary.SelectMany(x => x.Value).Count()).ToString("F")));
+
+            return result.ToString();
+        }
+
+        private void LReset()
+        {
+            var rand = new Random((int)(DateTime.Now.Ticks % (int.MaxValue - 1)));
+            aElements.ForEach(x => x.L = rand.Next() % 2 == 0 ? 1 : -1);
+            xElements.ForEach(x => x.Value = 0);
+        }
+
+        public string LearningLoop(Func<IList<CustomImage<ClassType>>> imgSupplier, Action<int> updateTb = null)
+        {
+            var resultStoreg = new List<int> { Config.LoopNumberMinValue };
+            for (int i = 0; i < Config.LoopNumber; i++)
+            {
+                var result = ProcessResult(Learninig(imgSupplier()));
+                if (result > resultStoreg.Max())
+                {
+                    resultStoreg.Add(result);
+                      SerializePerceptron(Regex.Replace(Config.SerializationPath, @"(\w+)(\.json)",
+                    m => m.Groups[1].Value + string.Format("({0})", result) + m.Groups[2].Value));
+                }
+
+                if (updateTb != null)
+                {
+                    updateTb(i*100/Config.LoopNumber);
+                }
+            }
+
+            return string.Format("(Max: {0})", resultStoreg.Max());
+        }
+
+        private int ProcessResult(string result)
+        {
+            const string pattern = @"Всего: (\d+)";
+            return Int32.Parse(Regex.Match(result, pattern).Groups[1].Value);
         }
     }
 }
