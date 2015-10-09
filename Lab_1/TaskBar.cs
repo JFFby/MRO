@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace Lab_1
 {
@@ -12,6 +13,12 @@ namespace Lab_1
         public void SetPreogessBar(int val)
         {
             progressBar1.Value = val;
+        }
+
+        public void SetLabel(string val)
+        {
+
+            label1.Text = val;
         }
     }
 }

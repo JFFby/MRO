@@ -123,7 +123,7 @@ namespace Lab_1
                 watc.Start();
                 var img = new CustomImage<ClassType>(Image.FromFile(openFileDialog1.FileName) as Bitmap, ClassType.One);
                 SetImage(img);
-               var classType = perceptron.DefineImage(img);
+                var classType = perceptron.DefineImage(img);
                 watc.Stop();
                 MessageBox.Show(classType + " " + watc.ElapsedMilliseconds);
             }
@@ -135,28 +135,27 @@ namespace Lab_1
             MessageBox.Show("Done");
         }
 
-        private void loopToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Task.Factory.StartNew(ThreadFn);
-        }
-
-        private void ThreadFn()
+        private async void loopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tb = new TaskBar();
-            tb.Show();
             var watc = new Stopwatch();
             watc.Start();
-            var result = perceptron.LearningLoop(imgHendler.GetImgImagesForLeaening, tb.SetPreogessBar);
-            watc.Stop();
+            tb.Show();
+            var stringProgress = new Progress<string>(x => tb.SetLabel(x));
+            var intPtrogress = new Progress<int>(x => tb.SetPreogessBar(x));
+            var result =
+                await
+                    Task<string>.Factory.StartNew(
+                        () => perceptron.LearningLoop(imgHendler.GetImgImagesForLeaening, stringProgress, intPtrogress),
+                        TaskCreationOptions.LongRunning);
             tb.Close();
+            watc.Stop();
             MessageBox.Show(result + " (" + watc.Elapsed + ")");
         }
 
         private void checkThisSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                perceptron.ResultEvaluation(
-                    imgHendler.GetImgImagesForLeaening().GroupBy(x => x.Class).ToDictionary(x => x.Key, y => y.ToList())));
+            MessageBox.Show(perceptron.ResultEvaluation(imgHendler.GetImgImagesForLeaening().GroupBy(x => x.Class).ToDictionary(x => x.Key, y => y.ToList())));
         }
     }
 }

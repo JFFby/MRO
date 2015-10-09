@@ -326,7 +326,7 @@ namespace Domain.Lab_1
             xElements.ForEach(x => x.Value = 0);
         }
 
-        public string LearningLoop(Func<IList<CustomImage<ClassType>>> imgSupplier, Action<int> updateTb = null)
+        public string LearningLoop(Func<IList<CustomImage<ClassType>>> imgSupplier, IProgress<string> strProgress, IProgress<int> intProgress)
         {
             var resultStoreg = new List<int> { Config.LoopNumberMinValue };
             for (int i = 0; i < Config.LoopNumber; i++)
@@ -335,14 +335,12 @@ namespace Domain.Lab_1
                 if (result > resultStoreg.Max())
                 {
                     resultStoreg.Add(result);
-                      SerializePerceptron(Regex.Replace(Config.SerializationPath, @"(\w+)(\.json)",
-                    m => m.Groups[1].Value + string.Format("({0})", result) + m.Groups[2].Value));
+                    SerializePerceptron(Regex.Replace(Config.SerializationPath, @"(\w+)(\.json)",
+                  m => m.Groups[1].Value + string.Format("({0})", result) + m.Groups[2].Value));
                 }
 
-                if (updateTb != null)
-                {
-                    updateTb(i*100/Config.LoopNumber);
-                }
+                strProgress.Report(string.Format("{0}/{1} ({2})", i + 1, Config.LoopNumber, resultStoreg.Max()));
+                intProgress.Report((i + 1) * 100 / Config.LoopNumber);
             }
 
             return string.Format("(Max: {0})", resultStoreg.Max());
