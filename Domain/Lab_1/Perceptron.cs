@@ -328,22 +328,29 @@ namespace Domain.Lab_1
 
         public string LearningLoop(Func<IList<CustomImage<ClassType>>> imgSupplier, IProgress<string> strProgress, IProgress<int> intProgress)
         {
-            var resultStoreg = new List<int> { Config.LoopNumberMinValue };
-            for (int i = 0; i < Config.LoopNumber; i++)
+            int maxValue = Config.LoopNumberMinValue;
+            var totalExperements = Config.LoopNumberRebuilding * Config.LearningLoopLearning;
+            for (int i = 0; i < Config.LoopNumberRebuilding; i++)
             {
-                var result = ProcessResult(Learninig(imgSupplier()));
-                if (result > resultStoreg.Max())
+                for (int j = 0; j < Config.LearningLoopLearning; j++)
                 {
-                    resultStoreg.Add(result);
-                    SerializePerceptron(Regex.Replace(Config.SerializationPath, @"(\w+)(\.json)",
-                  m => m.Groups[1].Value + string.Format("({0})", result) + m.Groups[2].Value));
+                    var result = ProcessResult(Learninig(imgSupplier()));
+                    if (result > maxValue)
+                    {
+                        maxValue = (result);
+                        SerializePerceptron(Regex.Replace(Config.SerializationPath, @"(\w+)(\.json)",
+                      m => m.Groups[1].Value + string.Format("({0})", result) + m.Groups[2].Value));
+                    }
+
+                    var progressValue = i * Config.LearningLoopLearning + j + 1;
+                    strProgress.Report(string.Format("{0}/{1} ({3}/{2})", progressValue, totalExperements, maxValue, result));
+                    intProgress.Report(progressValue * 100 / totalExperements);
                 }
 
-                strProgress.Report(string.Format("{0}/{1} ({2})", i + 1, Config.LoopNumber, resultStoreg.Max()));
-                intProgress.Report((i + 1) * 100 / Config.LoopNumber);
+                InitElements();
             }
 
-            return string.Format("(Max: {0})", resultStoreg.Max());
+            return string.Format("(Max: {0})", maxValue);
         }
 
         private int ProcessResult(string result)

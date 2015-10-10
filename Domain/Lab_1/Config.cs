@@ -26,7 +26,9 @@ namespace Domain.Lab_1
             get { return (LearningAlgoritm)Enum.Parse(typeof(LearningAlgoritm), ConfigurationManager.AppSettings["learningAlgoritm"]); }
         }
 
-        public static int LoopNumber { get { return Int32.Parse(ConfigurationManager.AppSettings["learningLoop"]); } }
+        public static int LoopNumberRebuilding { get { return Int32.Parse(ConfigurationManager.AppSettings["learningLoopRebuilding"]); } }
+
+        public static int LearningLoopLearning { get { return Int32.Parse(ConfigurationManager.AppSettings["learningLoopLearning"]); } }
 
         public static int LoopNumberMinValue { get { return Int32.Parse(ConfigurationManager.AppSettings["learningLoopMinValue"]); } }
     }
