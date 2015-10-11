@@ -329,12 +329,14 @@ namespace Domain.Lab_1
         public string LearningLoop(Func<IList<CustomImage<ClassType>>> imgSupplier, IProgress<string> strProgress, IProgress<int> intProgress)
         {
             int maxValue = Config.LoopNumberMinValue;
+            var summ = 0;
             var totalExperements = Config.LoopNumberRebuilding * Config.LearningLoopLearning;
             for (int i = 0; i < Config.LoopNumberRebuilding; i++)
             {
                 for (int j = 0; j < Config.LearningLoopLearning; j++)
                 {
                     var result = ProcessResult(Learninig(imgSupplier()));
+                    summ += result;
                     if (result > maxValue)
                     {
                         maxValue = (result);
@@ -343,7 +345,8 @@ namespace Domain.Lab_1
                     }
 
                     var progressValue = i * Config.LearningLoopLearning + j + 1;
-                    strProgress.Report(string.Format("{0}/{1} ({3}/{2})", progressValue, totalExperements, maxValue, result));
+                    strProgress.Report(string.Format("{0}/{1} ({3}/{4}/{2})", progressValue, totalExperements,
+                        maxValue, result, ((double)summ / progressValue).ToString("F")));
                     intProgress.Report(progressValue * 100 / totalExperements);
                 }
 
