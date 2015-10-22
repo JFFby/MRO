@@ -1,0 +1,14 @@
+﻿body {
+  background-color: aliceblue;
+}
+.container {
+  margin: 10% auto auto auto;
+  width: 600px;
+  height: 600px;
+}
+.container #canv {
+  width: 600px;
+  height: 600px;
+  background-color: aqua;
+}
+/*# sourceMappingURL=bug.css.map */
