@@ -25,5 +25,13 @@ Pixel.prototype.setPixelData = function(ctx, x,y ) {
     ctx.putImageData(this.pixelData(ctx), x, y);
 }
 
+Pixel.prototype.isBlack = function() {
+    return this.B == 255 && this.R == 255 && this.G == 255;
+}
+
+Pixel.prototype.isWhite = function () {
+    return this.B == 0 && this.R == 0 && this.G == 0;
+}
+
 Pixel.prototype.__class_name = 'Pixel';
 Pixel.prototype.constructor = Pixel;

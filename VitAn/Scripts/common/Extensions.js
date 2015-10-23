@@ -1,5 +1,6 @@
 ﻿(function ($) {
-    var getPixels = function (ctx, height, width) { // need to test
+    var getPixels = function (ctx, height, width, fn) { // need to test
+        var constructor = fn || Pixel;
         var data = ctx.getImageData(0, 0, width, height);
         var n = 4;
         var lists = _.chain(data.data).groupBy(function (e, index) {
@@ -7,17 +8,17 @@
         }).map(function (e, i, a) {
             x = parseInt(i >= width ? i % width : i);
             y = Math.floor(i / height);
-            return new Pixel(x, y, e);
+            return new constructor(x, y, e);
         });
         return lists;
     }
 
-    $.getVectorPixels = function (ctx, height, width) {
-        return getPixels(ctx, height, width).value();
+    $.getVectorPixels = function (ctx, height, width, fn) {
+        return getPixels(ctx, height, width, fn).value();
     }
 
-    $.getMatrixPixels = function (ctx, height, width) { //need to test
-        return getPixels(ctx, height, width).groupBy(function (e) {
+    $.getMatrixPixels = function (ctx, height, width, fn) { //need to test
+        return getPixels(ctx, height, width, fn).groupBy(function (e) {
             return e.Y;
         }).toArray().value();
     }
