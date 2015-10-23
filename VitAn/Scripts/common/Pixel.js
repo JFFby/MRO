@@ -24,3 +24,6 @@ Pixel.prototype.pixelData = function(ctx) {
 Pixel.prototype.setPixelData = function(ctx, x,y ) {
     ctx.putImageData(this.pixelData(ctx), x, y);
 }
+
+Pixel.prototype.__class_name = 'Pixel';
+Pixel.prototype.constructor = Pixel;

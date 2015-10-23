@@ -124,6 +124,7 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="Scripts\common\Extensions.js" />
+    <Content Include="Scripts\common\inherit.js" />
     <Content Include="Scripts\common\Pixel.js" />
     <Content Include="Scripts\scripts_a\bug_a.js" />
     <Content Include="Scripts\scripts_a\bug_a_main.js" />
