@@ -11,27 +11,11 @@
             <canvas id="canv">:)</canvas>
         </div>
         <script type="text/javascript" src="../../Scripts/bower_components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="../../Scripts/bower_components/underscore/underscore-min.js"></script>
         <script type="text/javascript" src="../../Scripts/scripts_a/bug_a.js"></script>
-        <script type="text/javascript">
-            var imgs = [
-                '../imgs/lbdv.jpg'
-            ];
-            $(function () {
-                var $canvas = $('#canv');
-                var ctx = $canvas.get(0).getContext('2d');
-                var img = new Image();
-                img.crossOrigin = 'anonymous';
-                img.src = imgs[0];
-                ctx.drawImage(img, 0, 0);
-                img.onload = function () {
-                    $canvas.css('width', img.width);
-                    $canvas.css('height', img.height);
-                    ctx.drawImage(img, 0, 0);
-                    console.log(ctx.getImageData(0, 0, 10, 10));
-                }
-            });
-            //chrome --user-data-dir=$(mktemp -d)  --allow-file-access-from-files
-            // alloy ctx.getImageData
-        </script>
+        <script type="text/javascript" src="../../Scripts/common/Extensions.js"></script>
+        <script type="text/javascript" src="../../Scripts/common/Pixel.js"></script>
+        <script type="text/javascript" src="../../Scripts/scripts_a/bug_a_main.js"></script>
+
     </body>
 </html>
