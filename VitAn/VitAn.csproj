@@ -123,6 +123,7 @@
       <DependentUpon>bug.css</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="Scripts\common\Entity.js" />
     <Content Include="Scripts\common\Extensions.js" />
     <Content Include="Scripts\common\inherit.js" />
     <Content Include="Scripts\common\Pixel.js" />
