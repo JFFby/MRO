@@ -6,8 +6,8 @@
         var lists = _.chain(data.data).groupBy(function (e, index) {
             return Math.floor(index / n);
         }).map(function (e, i, a) {
-            x = parseInt(i >= width ? i % width : i);
-            y = Math.floor(i / height);
+            var x = parseInt(i >= width ? i % width : i);
+            var y = Math.floor(i / width);
             return new constructor(x, y, e);
         });
         return lists;
