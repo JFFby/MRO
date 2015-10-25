@@ -8,7 +8,11 @@ Pixel_.prototype = {
     constructor: Pixel_,
     states: {
         notProcessed: 0,
-        processed: 1
+        processed: 1,
+        colorized: 2
+    },
+    isNeedToProcess: function () {
+        return this.state == this.states.notProcessed;
     }
 }
 

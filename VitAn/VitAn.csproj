@@ -129,6 +129,7 @@
     <Content Include="Scripts\common\Pixel.js" />
     <Content Include="Scripts\scripts_a\bug_a.js" />
     <Content Include="Scripts\scripts_a\bug_a_main.js" />
+    <Content Include="Scripts\scripts_a\Colorizer.js" />
     <Content Include="Scripts\scripts_a\Pixel_.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

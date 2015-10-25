@@ -18,11 +18,11 @@
         return 3;
     }
 
-  var imgEntity = function (number, color, pixels) {
+  var imgEntity = function (obj) {
 
-        this.Number = number;
-        this.Color = color;
-        this.Pixels = pixels; // Array
+      this.Number = obj.number;
+      this.Color = obj.color;
+      this.Pixels = obj.pixels; // Array
         this.MaxLeftPx = findMaxLeftPx.apply(this);
         this.MaxRightPx = findMaxRightPx.apply(this);
         this.MaxTopPx = findMaxTopPx.apply(this);

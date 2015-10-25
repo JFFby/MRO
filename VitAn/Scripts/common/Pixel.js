@@ -21,8 +21,8 @@ Pixel.prototype.pixelData = function(ctx) {
     return px;
 }
 
-Pixel.prototype.setPixelData = function(ctx, x,y ) {
-    ctx.putImageData(this.pixelData(ctx), x, y);
+Pixel.prototype.setPixelData = function(ctx) {
+    ctx.putImageData(this.pixelData(ctx), this.X, this.Y);
 }
 
 Pixel.prototype.isWhite = function () {
@@ -31,6 +31,12 @@ Pixel.prototype.isWhite = function () {
 
 Pixel.prototype.isBlack = function () {
     return this.B == 0 && this.R == 0 && this.G == 0;
+}
+
+Pixel.prototype.setRgb = function (rgb) {
+    this.R = rgb.r;
+    this.B = rgb.b;
+    this.G = rgb.g;
 }
 
 Pixel.prototype.__class_name = 'Pixel';
