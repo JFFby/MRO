@@ -1,24 +1,9 @@
-var http = require("http");
-var url = require("url");
+var express = require('express');
+var router = require('./router');
+var app = module.exports = exports = express();
 
-function start(route, handle) {
-    function onRequest(request, response) {
-        var postData = '';
-        var pathname = url.parse(request.url).pathname;
+app.set('port', 3300);
+app.set('views','./views');
 
-        request.setEncoding("utf8");
-
-        request.addListener("data", function (postDataChunk) {
-            postData += postDataChunk;
-        });
-
-        request.addListener("end", function () {
-            route(handle, pathname, response, postData);
-        });
-    }
-
-    http.createServer(onRequest).listen(8888);
-    console.log("Server has started.");
-}
-
-exports.start = start;
+app.use(express.static(__dirname + '/public'));
+app.use('/',router);

@@ -1,13 +1,19 @@
-function route(handle, pathname, response, postData) {
-    console.log("About to route a request for " + pathname);
-    if (typeof handle[pathname] === 'function') {
-        handle[pathname](response, postData);
-    } else {
-        console.log("No request handler found for " + pathname);
-        response.writeHead(404, { "Content-Type": "text/plain" });
-        response.write("404 Not found");
-        response.end();
-    }
-}
+var express = require('express');
+var router = express.Router();
 
-exports.route = route;
+router.use(function timeLog(req, res, next) {
+ console.log('Time: ', Date.now());
+	console.log(req._parsedUrl);
+ next();
+});
+router.get('/a', function(req, res) {
+ res.sendFile(__dirname + '/views/bug_a.html');
+});
+
+router.all('/push/:name', function(req, res) {
+	console.log(req.params);
+	console.log(req._parsedUrl);
+	res.end();
+});
+
+module.exports = router;

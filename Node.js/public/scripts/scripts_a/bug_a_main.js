@@ -1,10 +1,10 @@
 ﻿$(function () {
 
     var imgs = [
-    '../imgs/lbdv.jpg',
-    '../imgs/test1.png',
-    '../imgs/test2.png',
-    '../imgs/work_image.png'
+    '../public/imgs/lbdv.jpg',
+    '../public/imgs/test1.png',
+    '../public/imgs/test2.png',
+    '../public/imgs/work_image.png'
     ];
 
     var canvas = document.getElementById("canv");
