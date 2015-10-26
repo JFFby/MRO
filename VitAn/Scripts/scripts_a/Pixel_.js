@@ -9,7 +9,8 @@ Pixel_.prototype = {
     states: {
         notProcessed: 0,
         processed: 1,
-        colorized: 2
+        colorized: 2,
+        inObject: 3
     },
     isNeedToProcess: function () {
         return this.state == this.states.notProcessed;

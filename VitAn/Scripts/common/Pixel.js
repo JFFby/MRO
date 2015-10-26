@@ -1,7 +1,7 @@
 ﻿function Pixel(x, y, data) {
     var self = this;
 
-    var sourse = _.isArray(data) ? data : data.data;
+    var sourse = data ?  _.isArray(data) ? data : data.data : [];
 
     self.X = x;
     self.Y = y;

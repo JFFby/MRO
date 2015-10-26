@@ -154,8 +154,8 @@
 
         do {
             var nextPx = findNextBlackPx();
-            obj.pixels.push(nextPx);
             needTocheck = needTocheck.concat(findHiddenPxs(nextPx));
+            obj.pixels.push(nextPx);
         } while (self.location.x != startPx.X || self.location.y != startPx.Y)
 
         _.remove(needTocheck, function (e) {
@@ -183,7 +183,7 @@
             var cachedDirection = self.direction;
             self.move.turnOn(directions.right);
             self.move.step();
-            if (getCurrPx().isBlack()) {
+            if (getCurrPx().isBlack()) { //если выше и правее белый
                 result.push(getCurrPx());
             }
 
@@ -200,7 +200,7 @@
                     continue;
                 }
 
-                if (pixels[y] && pixels[y][x] && pixels[y][x].isBlack()) {
+                if (pixels[y] && pixels[y][x] && pixels[y][x].isBlack() && pixels[y][x].state != pStates.inObject) {
                     result.push(pixels[y][x]);
                 }
             }
