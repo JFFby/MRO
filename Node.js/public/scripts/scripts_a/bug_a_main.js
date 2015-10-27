@@ -19,7 +19,7 @@
 		$.ajax({
 			method:'POST',
 			url:'push/a',
-			data:{data:px},
+			data:{data:px, name:'test'},
 			succes:function(data){
 				console.log(data);
 			}
