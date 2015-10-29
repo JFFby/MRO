@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VitAn", "VitAn\VitAn.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{D53CD926-7FE2-45B7-BCBC-304A3F7F4627}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node", "Node.js\Node.csproj", "{797620C3-5E7D-40F3-8FBD-F63C07E93532}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D53CD926-7FE2-45B7-BCBC-304A3F7F4627}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D53CD926-7FE2-45B7-BCBC-304A3F7F4627}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D53CD926-7FE2-45B7-BCBC-304A3F7F4627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{797620C3-5E7D-40F3-8FBD-F63C07E93532}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{797620C3-5E7D-40F3-8FBD-F63C07E93532}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{797620C3-5E7D-40F3-8FBD-F63C07E93532}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{797620C3-5E7D-40F3-8FBD-F63C07E93532}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

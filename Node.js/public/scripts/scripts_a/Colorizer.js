@@ -10,7 +10,7 @@
     var colorize = function (obj, pixels) {
         _.pxs = pixels;
         _.chain(obj.pixels).sortBy('X').groupBy('Y').forEach(function (e) {
-            for (var i = e[0].X; i <= e[e.length - 1].X; ++i) {
+            for (var i = e[0].X, el = e[e.length - 1].X; i <= el; ++i) {
                 var px = _.pxs[e[0].Y][i];
                 if (px.isBlack()) {
                     px.setRgb($.hexToRgb(obj.color));

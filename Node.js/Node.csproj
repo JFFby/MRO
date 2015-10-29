@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{797620C3-5E7D-40F3-8FBD-F63C07E93532}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Node</RootNamespace>
+    <AssemblyName>Node</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="index.js" />
+    <Content Include="public\imgs\download %281%29.png" />
+    <Content Include="public\imgs\download.png" />
+    <Content Include="public\imgs\test1.png" />
+    <Content Include="public\imgs\work_image.png" />
+    <Content Include="public\scripts\common\Entity.js" />
+    <Content Include="public\scripts\common\Extensions.js" />
+    <Content Include="public\scripts\common\inherit.js" />
+    <Content Include="public\scripts\common\Pixel.js" />
+    <Content Include="public\scripts\scripts_a\bug_a.js" />
+    <Content Include="public\scripts\scripts_a\bug_a_main.js" />
+    <Content Include="public\scripts\scripts_a\Colorizer.js" />
+    <Content Include="public\scripts\scripts_a\Pixel_.js" />
+    <Content Include="public\сss\bug_a\bug.css" />
+    <Content Include="public\сss\bug_a\bug.min.css" />
+    <Content Include="router.js" />
+    <Content Include="server.js" />
+    <Content Include="services\bugSevice.js" />
+    <Content Include="views\bug_a.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="package.json" />
+    <None Include="public\files\bug_a\test.json" />
+    <None Include="public\scripts\bower.json" />
+    <None Include="public\сss\bug_a\bug.css.map" />
+    <None Include="public\сss\bug_a\bug.less" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="public\scripts\sccripts_v\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

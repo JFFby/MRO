@@ -1,7 +1,8 @@
 ﻿Bug = function (config) {
 
     config = _.extend({
-        isDeepSearch: false
+        isDeepSearch: false,
+        minObjSize: 1000
     }, config);
 
     var self = this;
@@ -86,7 +87,10 @@
         if (obj) {
             console.log(obj);
             colorizer.colorize(obj, pixels, config.ctx);
-            objects.push(new imgEntity(obj));
+            if (obj.pixels.length > config.minObjSize) {
+                objects.push(new imgEntity(obj));
+            }
+
             _.delay(function () {
                 self.Run();
             }, 100);
@@ -96,7 +100,7 @@
     }
 
     var getStartPixel = function () {
-        for (var i = 0; i < pixels.length; ++i) {
+        for (var i = 0, pl = pixels.length; i < pl; ++i) {
             var px = _.find(pixels[i], function (x) {
                 return x.isWhite() && x.state == pStates.notProcessed;
             });
@@ -194,8 +198,8 @@
 
         if (!config.isDeepSearch) return result;
 
-        for (var y = self.location.y - 1; y <= self.location.y + 1; y++) {
-            for (var x = self.location.x - 1; x <= self.location.x + 1; x++) {
+        for (var y = self.location.y - 1, ly = self.location.y + 1; y <= ly; y++) {
+            for (var x = self.location.x - 1, slx = self.location.x + 1; x <= slx; x++) {
                 if (x == px.X || y == px.Y) {
                     continue;
                 }
