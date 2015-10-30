@@ -2,7 +2,8 @@
 
     config = _.extend({
         isDeepSearch: false,
-        minObjSize: 1000
+        minObjSize: 1000,
+        ObjectsPushToServer: 100
     }, config);
 
     var self = this;
@@ -95,7 +96,10 @@
                 self.Run();
             }, 100);
         } else {
-            config.resultProcessor(objects);
+            var result = _.chain(objects).sortBy(function (e) {
+                return 0 - e.Pixels.length;
+            }).take(config.ObjectsPushToServer).toArray().value();
+            config.resultProcessor(result);
         }
     }
 

@@ -10,33 +10,38 @@
     var canvas = document.getElementById("canv");
     var ctx = canvas.getContext('2d');
     var img = new Image();
-    img.src = imgs[3];
+    var imgLink = imgs[3];
+    img.src = imgLink;
+    var isDeepSearch = true;
     img.onload = function () {
         canvas.width = img.width;
         canvas.height = img.height;
         ctx.drawImage(img, 0, 0, img.width, img.height);
-        //var px = JSON.stringify(new Pixel(1,3,[33,1,2,3]));
-        //$.ajax({
-        //	method:'POST',
-        //	url:'push/a',
-        //	data:{data:px, name:'test'},
-        //	succes:function(data){
-        //		console.log(data);
-        //	}
-        //});
         var bug = new Bug({
             ctx: ctx,
             height: img.height,
             width: img.width,
             pixels: $.getMatrixPixels(ctx, img.height, img.width, Pixel_),
             resultProcessor: function (data) {
-                objects = data;
                 var end = new Date();
                 console.log("find: ".concat(end - start));
+                pushResults(data, imgLink, isDeepSearch);
             },
-            isDeepSearch: true
+            isDeepSearch: isDeepSearch
         });
         var start = new Date();
-        var objects = bug.Run();
+        bug.Run();
     }
 });
+
+function pushResults(pixels, imglink, comment) {
+    var imgName = new RegExp('/(\\w*)[.]').exec(imglink)[1];
+    $.ajax({
+        method: 'POST',
+        url: 'push/a',
+        data: { data: JSON.stringify(pixels), name: imgName, comment: '_isDeep_' + comment },
+        succes: function (data) {
+            console.log(data);
+        }
+    });
+}
