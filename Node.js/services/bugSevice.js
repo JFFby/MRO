@@ -4,7 +4,7 @@ function BugService() {
     var self = this;
 
     self.serialize = function (path, data, callback) {
-        path = pathHelper[path] + data.name + pathHelper.extensions.json;
+        path = pathHelper[path] + data.name + data.comment ? data.comment : "" + pathHelper.extensions.json;
         fs.writeFile(path, data.data, function (error) {
             var success = true;
             if (error) {
@@ -12,12 +12,12 @@ function BugService() {
                 success = false;
             }
 
-            callback && callback({ success: success });
+            callback && callback({ success: success, path: path });
         });
     }
 
     self.deserialize = function (path, filename, callback) {
-        path = pathHelper[path] + filename + pathHelper.extensions.json
+        path = pathHelper[path] + filename + pathHelper.extensions.json;
         fs.readFile(path, function read(error, data) {
             var success = true;
             if (error) {
