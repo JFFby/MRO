@@ -22,9 +22,9 @@ router.post('/push/:name', function (req, res) {
 });
 
 router.get('/fetch/:name', function(req, res) {
-    console.log(req.params);
-    console.log(req.query);
-    bugService.deserialize(req.params.name, req.query.fileName, function(data) {
+    //console.log(req.params);
+    //console.log(req.query);
+    bugService.deserialize(req.params.name, req.query.filename, function(data) {
         res.write(JSON.stringify(data));
         res.end();
     });

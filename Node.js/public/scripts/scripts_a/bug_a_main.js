@@ -39,9 +39,9 @@ function pushResults(pixels, imglink, comment) {
     $.ajax({
         method: 'POST',
         url: 'push/a',
-        data: { data: pixels, name: imgName, comment: '_isDeep_' + comment },
+        data: { data: JSON.stringify(pixels), name: imgName, comment: '_isDeep_' + comment },
         succes: function (data) {
             console.log(data);
-        }
-    });
+    }
+});
 }

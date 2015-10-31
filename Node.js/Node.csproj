@@ -51,6 +51,7 @@
     <Content Include="router.js" />
     <Content Include="server.js" />
     <Content Include="services\bugSevice.js" />
+    <Content Include="services\previewServise.js" />
     <Content Include="views\bug_a.html" />
   </ItemGroup>
   <ItemGroup>
