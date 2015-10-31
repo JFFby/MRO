@@ -10,12 +10,18 @@ PreviewServise = function () {
     var step = 1500;
 
     self.createPreview = function (object, imgsfolder, callback) {
-        //console.log('imgsfolder: ' + imgsfolder);
+
+        var path = imgsfolder + "\\" + object.Number + fileExtesion;
+        if (isFileExists(path)) {
+            callback && callback(path);
+            return;
+        }
+
         mkdirSync(imgsfolder);
-        removeOldImages(imgsfolder);
-        createImage(object, imgsfolder, callback);
+        createImage(object, path, callback);
     }
 
+    // нафига я это заимплеменил ? ладно, пусть будет :)
     var removeOldImages = function (imgsfolder) {
         fs.readdir(imgsfolder, function (err, files) {
             if (err) throw err;
@@ -27,8 +33,7 @@ PreviewServise = function () {
         });
     }
 
-    var createImage = function (object, imgsfolder, callback) {
-        var path = imgsfolder + "\\" + object.Number + fileExtesion;
+    var createImage = function (object, path, callback) {
         gm(object.Width, object.Height, "#ffffffff").write(path, function () {
             colorize(object, path, 0, callback);
         });;
@@ -56,6 +61,16 @@ PreviewServise = function () {
             fs.mkdirSync(path);
         } catch (e) {
             if (e.code != 'EEXIST') throw e;
+        }
+    }
+
+    var isFileExists = function(path) {
+        try {
+            var stats = fs.statSync(path);
+            return true;
+        }
+        catch (e) {
+            return false;
         }
     }
 }
