@@ -5,9 +5,7 @@ var bugService = require('./../services/bugSevice');
 var path = require('path');
 
 router.get('/', function (req, res) {
-    var file = path.resolve(__dirname, '..', 'views/bug_a.html');
-    console.log(file);
-    res.sendFile(path.resolve(file));
+    res.render("bug_a.jade");
 });
 
 router.post('/push/:name', function (req, res) {
@@ -27,6 +25,10 @@ router.get('/fetch/:name', function(req, res) {
         res.write(JSON.stringify(data));
         res.end();
     });
+});
+
+router.get('/results/', function (req, res) {
+   
 });
 
 module.exports = router;

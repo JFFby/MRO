@@ -54,16 +54,17 @@
     <Content Include="server.js" />
     <Content Include="services\bugSevice.js" />
     <Content Include="services\previewServise.js" />
-    <Content Include="views\bug_a.html" />
+    <Content Include="views\index.html" />
   </ItemGroup>
   <ItemGroup>
     <None Include="package.json" />
-    <None Include="public\files\bug_a\test.json" />
     <None Include="public\scripts\bower.json" />
     <None Include="public\сss\bug_a\bug.css.map" />
     <None Include="public\сss\bug_a\bug.less" />
+    <None Include="views\bug_a.jade" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="public\files\bug_a\" />
     <Folder Include="public\scripts\sccripts_v\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
