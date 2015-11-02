@@ -38,7 +38,7 @@ function pushResults(pixels, imglink, comment) {
     var imgName = new RegExp('/(\\w*)[.]').exec(imglink)[1];
     $.ajax({
         method: 'POST',
-        url: 'push/a',
+        url: 'a/push/a',
         data: { data: JSON.stringify(pixels), name: imgName, comment: '_isDeep_' + comment },
         succes: function (data) {
             console.log(data);

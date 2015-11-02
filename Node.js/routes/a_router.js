@@ -1,14 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
-var bugService = require('./services/bugSevice');
+var bugService = require('./../services/bugSevice');
+var path = require('path');
 
-router.get('/a', function (req, res) {
-    res.sendFile(__dirname + '/views/bug_a.html');
-});
-
-router.get('/public/*', function (req, res) {
-    res.sendFile(__dirname + req._parsedUrl.path);
+router.get('/', function (req, res) {
+    var file = path.resolve(__dirname, '..', 'views/bug_a.html');
+    console.log(file);
+    res.sendFile(path.resolve(file));
 });
 
 router.post('/push/:name', function (req, res) {

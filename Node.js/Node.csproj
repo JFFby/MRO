@@ -48,7 +48,9 @@
     <Content Include="public\scripts\scripts_a\Pixel_.js" />
     <Content Include="public\сss\bug_a\bug.css" />
     <Content Include="public\сss\bug_a\bug.min.css" />
-    <Content Include="router.js" />
+    <Content Include="routes\a_router.js" />
+    <Content Include="routes\common.js" />
+    <Content Include="routes\v_router.js" />
     <Content Include="server.js" />
     <Content Include="services\bugSevice.js" />
     <Content Include="services\previewServise.js" />
