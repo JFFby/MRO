@@ -1,5 +1,6 @@
 var express = require('express');
 var router = require('./router');
+
 var app = module.exports = exports = express();
 
 app.set('port', 3300);

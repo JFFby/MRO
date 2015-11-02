@@ -3,5 +3,5 @@ var app = require("./server");
 var port = app.get('port');
 
 http.createServer(app).listen(port, function(){
-	console.log('visit to localhost:' + port);
+	console.log('server start:' + port);
 });

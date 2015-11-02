@@ -42,6 +42,6 @@ function pushResults(pixels, imglink, comment) {
         data: { data: JSON.stringify(pixels), name: imgName, comment: '_isDeep_' + comment },
         succes: function (data) {
             console.log(data);
-        }
-    });
+    }
+});
 }
