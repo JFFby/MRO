@@ -1,0 +1,27 @@
+﻿doctype html
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		title Результаты поиска
+		link(type="text/css" href="../сss/results/index.min.css" rel="stylesheet")/
+		link(type="text/css" href="../сss/bug_a/bug.css" rel="stylesheet")/
+	body
+		div(data-bind='simpleGrid: gridViewModel')
+		button(data-bind='click: sortNumber')  Sort by pixel count
+		button Sort by number
+		button(data-bind='click: jumpToFirstPage, enable: gridViewModel.currentPageIndex')
+			| Jump to first page
+		button(data-bind='click: reset')
+			| Reset
+		p
+			| left limit:
+			input(data-bind="value: modelLimit.left")/
+			| right limit:
+			input(data-bind="value: modelLimit.right")/
+			button(class="buttom" data-bind='click: sortLimit')
+				| Sort by limit
+				
+		script(type="text/javascript" src="../scripts/bower_components/jquery/dist/jquery.min.js")
+		script(type="text/javascript" src="../scripts/bower_components/knockout/dist/knockout.js")
+		script(type="text/javascript" src="../scripts/scripts_v/knockout.simpleGrid.3.0.js")
+		script(type="text/javascript" src="../scripts/scripts_v/gridView.js")

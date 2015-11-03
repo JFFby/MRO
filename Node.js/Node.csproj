@@ -46,8 +46,18 @@
     <Content Include="public\scripts\scripts_a\bug_a_main.js" />
     <Content Include="public\scripts\scripts_a\Colorizer.js" />
     <Content Include="public\scripts\scripts_a\Pixel_.js" />
-    <Content Include="public\сss\bug_a\bug.css" />
-    <Content Include="public\сss\bug_a\bug.min.css" />
+    <Content Include="public\сss\bug_a\bug.css">
+      <DependentUpon>bug.less</DependentUpon>
+    </Content>
+    <Content Include="public\сss\bug_a\bug.min.css">
+      <DependentUpon>bug.css</DependentUpon>
+    </Content>
+    <Content Include="public\сss\results\index.css">
+      <DependentUpon>index.less</DependentUpon>
+    </Content>
+    <Content Include="public\сss\results\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
     <Content Include="routes\a_router.js" />
     <Content Include="routes\common.js" />
     <Content Include="routes\v_router.js" />
@@ -59,9 +69,16 @@
   <ItemGroup>
     <None Include="package.json" />
     <None Include="public\scripts\bower.json" />
-    <None Include="public\сss\bug_a\bug.css.map" />
+    <None Include="public\сss\bug_a\bug.css.map">
+      <DependentUpon>bug.css</DependentUpon>
+    </None>
     <None Include="public\сss\bug_a\bug.less" />
+    <None Include="public\сss\results\index.css.map">
+      <DependentUpon>index.css</DependentUpon>
+    </None>
+    <None Include="public\сss\results\index.less" />
     <None Include="views\bug_a.jade" />
+    <None Include="views\results.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\files\bug_a\" />

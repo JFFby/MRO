@@ -1,51 +1,41 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-<style type="text/css">
-    .ko-grid { margin-bottom: 1em; width: 25em; border: 1px solid silver; background-color:White; }
-    .ko-grid th { text-align:left; background-color: Black; color:White; }
-    .ko-grid td, th { padding: 0.4em; }
-    .ko-grid tr:nth-child(odd) { background-color: #DDD; }
-    .ko-grid-pageLinks { margin-bottom: 1em; }
-    .ko-grid-pageLinks a { padding: 0.5em; }
-    .ko-grid-pageLinks a.selected { background-color: Black; color: White; }
-    .liveExample { height:20em; overflow:auto } 
-    .buttom{margin-left:10px;}
-    input{width:30px;}
-</style>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link type="text/css" href="../public/сss/results/index.min.css" rel="stylesheet" />   
+</head>
 <body>
-	
+
     <script type="text/javascript" src="../public/scripts/bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="../public/scripts/bower_components/knockout/dist/knockout.js"></script>
-	<script type="text/javascript" src="../public/scripts/scripts_v/knockout.simpleGrid.3.0.js"></script>
+    <script type="text/javascript" src="../public/scripts/scripts_v/knockout.simpleGrid.3.0.js"></script>
 
-<div data-bind='simpleGrid: gridViewModel'> </div>
- 
-<button data-bind='click: sortPixelCount'>
-    Sort by pixel count
-</button>
- 
-<button data-bind='click: sortNumber'>
-    Sort by number
-</button>
+    <div data-bind='simpleGrid: gridViewModel'> </div>
 
-<button data-bind='click: jumpToFirstPage, enable: gridViewModel.currentPageIndex'>
-    Jump to first page
-</button> 
+    <button data-bind='click: sortPixelCount'>
+        Sort by pixel count
+    </button>
 
-<button data-bind='click: reset'>
-   Reset
-</button> 
+    <button data-bind='click: sortNumber'>
+        Sort by number
+    </button>
 
-<p>
-left limit: <input data-bind="value: modelLimit.left"/> 
-right limit: <input data-bind="value: modelLimit.right"/>
-<button class="buttom" data-bind='click: sortLimit'>
-   Sort by limit
-</button> 
-</p>
-<script type="text/javascript" src="../public/scripts/scripts_v/gridView.js"></script>		
+    <button data-bind='click: jumpToFirstPage, enable: gridViewModel.currentPageIndex'>
+        Jump to first page
+    </button>
+
+    <button data-bind='click: reset'>
+        Reset
+    </button>
+
+    <p>
+        left limit: <input data-bind="value: modelLimit.left" />
+        right limit: <input data-bind="value: modelLimit.right" />
+        <button class="buttom" data-bind='click: sortLimit'>
+            Sort by limit
+        </button>
+    </p>
+    <script type="text/javascript" src="../public/scripts/scripts_v/gridView.js"></script>
 </body>
 </html>

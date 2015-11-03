@@ -28,7 +28,7 @@ router.get('/fetch/:name', function(req, res) {
 });
 
 router.get('/results/', function (req, res) {
-   
+    res.render("results.jade");
 });
 
 module.exports = router;
