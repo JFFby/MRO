@@ -1,6 +1,6 @@
 ﻿.ko-grid {
   margin-bottom: 1em;
-  width: 25em;
+  width: 100%;
   border: 1px solid silver;
   background-color: White;
 }
@@ -35,5 +35,8 @@ th {
 }
 input {
   width: 30px;
+}
+.page-container {
+  margin: 0 10% 0 10%;
 }
 /*# sourceMappingURL=index.css.map */

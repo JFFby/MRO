@@ -17,6 +17,7 @@
             this.data = configuration.data;
             this.currentPageIndex = ko.observable(0);
             this.pageSize = configuration.pageSize || 5;
+            this.afterRender = configuration.afterRender;
 
             // If you don't specify columns configuration, we'll use scaffolding
             this.columns = configuration.columns || getColumnsForScaffolding(ko.unwrap(this.data));
@@ -46,7 +47,7 @@
                                <th data-bind=\"text: headerText\"></th>\
                             </tr>\
                         </thead>\
-                        <tbody data-bind=\"foreach: itemsOnCurrentPage\">\
+                        <tbody data-bind=\"template:{foreach: itemsOnCurrentPage, afterRender:afterRender}\">\
                            <tr data-bind=\"foreach: $parent.columns\">\
                                <td data-bind=\"text: typeof rowText == 'function' ? rowText($parent) : $parent[rowText] \"></td>\
                             </tr>\

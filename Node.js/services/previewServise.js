@@ -11,9 +11,9 @@ PreviewServise = function () {
 
     self.createPreview = function (object, imgsfolder, callback) {
 
-        var path = imgsfolder + "\\" + object.Number + fileExtesion;
+        var path = imgsfolder + "/" + object.Number + fileExtesion;
         if (isFileExists(path)) {
-            callback && callback(path);
+            callback && callback(processPath(path));
             return;
         }
 
@@ -28,7 +28,7 @@ PreviewServise = function () {
 
             files.forEach(function (file) {
                 console.log("delete: " + file);
-                fs.unlinkSync(imgsfolder + "\\" + file);
+                fs.unlinkSync(imgsfolder + "/" + file);
             });
         });
     }
@@ -51,7 +51,7 @@ PreviewServise = function () {
             if (nextStep < object.Pixels.length) {
                 colorize(object, path, nextStep, callBack);
             } else {
-                callBack && callBack();
+                callBack && callBack(processPath(path));
             }
         });
     }
@@ -72,6 +72,10 @@ PreviewServise = function () {
         catch (e) {
             return false;
         }
+    }
+
+    var processPath = function(path) {
+        return path.replace('.', '');
     }
 }
 

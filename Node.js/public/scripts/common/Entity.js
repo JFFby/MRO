@@ -8,11 +8,11 @@
     }
 
     function findMaxTopPx() {
-        return _.min(this.Pixels, 'Y')
+        return _.min(this.Pixels, 'Y');
     }
 
     function findMaxBottomPx() {
-        return _.max(this.Pixels, 'Y')
+        return _.max(this.Pixels, 'Y');
     }
 
     var imgEntity = function (obj) {

@@ -42,10 +42,13 @@
     <Content Include="public\scripts\common\Extensions.js" />
     <Content Include="public\scripts\common\inherit.js" />
     <Content Include="public\scripts\common\Pixel.js" />
+    <Content Include="public\scripts\common\previewFetcher.js" />
     <Content Include="public\scripts\scripts_a\bug_a.js" />
     <Content Include="public\scripts\scripts_a\bug_a_main.js" />
     <Content Include="public\scripts\scripts_a\Colorizer.js" />
     <Content Include="public\scripts\scripts_a\Pixel_.js" />
+    <Content Include="public\scripts\scripts_v\gridView.js" />
+    <Content Include="public\scripts\scripts_v\knockout.simpleGrid.3.0.js" />
     <Content Include="public\сss\bug_a\bug.css">
       <DependentUpon>bug.less</DependentUpon>
     </Content>
@@ -82,7 +85,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\files\bug_a\" />
-    <Folder Include="public\scripts\sccripts_v\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -25,7 +25,13 @@
             resultProcessor: function (data) {
                 var end = new Date();
                 console.log("find: ".concat(end - start));
-                pushResults(data, imgLink, isDeepSearch);
+
+                var imgName = new RegExp('/(\\w*)[.]').exec(imgLink)[1];
+                var fullName = imgName + '_isDeep_' + isDeepSearch;
+                pushResults(data, fullName).done(function (result) {
+                    console.log(result);
+                    window.open('results/a?filename=' + fullName, '_blank');
+                });
             },
             isDeepSearch: isDeepSearch
         });
@@ -34,14 +40,10 @@
     }
 });
 
-function pushResults(pixels, imglink, comment) {
-    var imgName = new RegExp('/(\\w*)[.]').exec(imglink)[1];
-    $.ajax({
+function pushResults(pixels, imgName) {
+    return  $.ajax({
         method: 'POST',
-        url: 'a/push/a',
-        data: { data: JSON.stringify(pixels), name: imgName, comment: '_isDeep_' + comment },
-        succes: function (data) {
-            console.log(data);
-    }
-});
+        url: '/a/push/a',
+        data: { data: JSON.stringify(pixels), name: imgName }
+    });
 }
