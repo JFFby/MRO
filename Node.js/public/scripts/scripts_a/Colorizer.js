@@ -1,10 +1,14 @@
-﻿Colorizer = function () {
+﻿Colorizer = function (fullColorize) {
 
     this.colorize = function (obj, pixels, ctx) {
+          if (fullColorize) {
         colorize(obj, pixels);
         _.forEach(obj.pixels, function (p) {
             p.setPixelData(ctx);
         });
+        } else {
+            this.borderColorize(obj, ctx);
+        }
     }
 
     var colorize = function (obj, pixels) {
@@ -26,7 +30,7 @@
         _.pxs = null;
     }
 
-    this.borderColorize = function (obj,ctx) { // не тестил 
+    this.borderColorize = function (obj, ctx) { // не тестил 
         _.forEach(obj.pixels, function (e) {
             e.state = e.states.colorized;
             e.setRgb($.hexToRgb(obj.color));

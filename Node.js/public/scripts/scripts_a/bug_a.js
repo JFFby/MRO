@@ -2,7 +2,7 @@
 
     config = _.extend({
         isDeepSearch: false,
-        minObjSize: 1000,
+        minObjSize: 50,
         ObjectsPushToServer: 100
     }, config);
 
@@ -21,7 +21,7 @@
     var cachSize = 15;
     var cacheBuffer = 5;
     var objects = [];
-    var colorizer = new Colorizer();
+    var colorizer = new Colorizer(config.fullColorize);
 
     self.location = { x: 0, y: 0 }
     self.direction = directions.right;
@@ -163,6 +163,7 @@
         do {
             var nextPx = findNextBlackPx();
             needTocheck = needTocheck.concat(findHiddenPxs(nextPx));
+            nextPx.state = pStates.inObject;
             obj.pixels.push(nextPx);
         } while (self.location.x != startPx.X || self.location.y != startPx.Y)
 
@@ -228,7 +229,18 @@
         self.direction = directions.right;
     }
 
-    var findBlackPx = function () {
+    var findBlackPx = null;
+    var findBlackPx_contur = function () {
+        var bPx;
+        do {
+            self.move.step();
+            bPx = getCurrPx();
+        } while (isInside() && (!bPx || bPx.isWhite() /*|| !bPx.isNeedToProcess()*/));
+
+        return bPx && bPx.isNeedToProcess() ? bPx : null;
+    }
+
+    var findBlackPx_full = function () {
         var bPx;
         do {
             self.move.step();
@@ -276,5 +288,8 @@
             pixels[self.location.y][self.location.x].state = pStates.processed;
         }
     }
+
+    findBlackPx = config.fullColorize ? findBlackPx_full : findBlackPx_contur;
+
 }
 //var a = [{ x: 1, y: 1 }, { x: 1, y: 1 }, { x: 1, y: 2 }]
