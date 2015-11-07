@@ -1,5 +1,5 @@
 ﻿//see there how to use this https://github.com/aheckmann/gm
-var gm = require('gm');
+var gm = require('gm').subClass({imageMagick:true});
 var fs = require('fs');
 
 PreviewServise = function () {
