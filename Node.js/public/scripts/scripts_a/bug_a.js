@@ -152,6 +152,7 @@
     }
 
     var tryGetObject = function (startPx, oldObject) {
+        //     try {
         var obj = oldObject || {
             number: objects.length + 1,
             color: $.getRandomColor(),
@@ -162,26 +163,34 @@
 
         do {
             var nextPx = findNextBlackPx();
-            needTocheck = needTocheck.concat(findHiddenPxs(nextPx));
-            nextPx.state = pStates.inObject;
-            obj.pixels.push(nextPx);
-        } while (self.location.x != startPx.X || self.location.y != startPx.Y)
+            if (nextPx) {
+                if (config.isDeepSearch && config.fullColorize) {
+                    needTocheck = needTocheck || [];
+                    needTocheck = needTocheck.concat(findHiddenPxs(nextPx));
+                }
+                nextPx.state = pStates.inObject;
+                obj.pixels.push(nextPx);
+            }
+        } while (nextPx && (self.location.x != startPx.X || self.location.y != startPx.Y))
 
-        _.remove(needTocheck, function (e) {
+        _.remove(needTocheck || [], function (e) {
             return _.contains(obj.pixels, e);
         });
 
         return {
             object: obj,
-            startPxs: needTocheck
+            startPxs: needTocheck || []
         };
+        //} catch (e) {
+        //    debugger;
+        //}
     }
 
     var findNextBlackPx = function () {
         do {
             self.move.turnOn(getCurrPx().isBlack() ? directions.left : directions.right);
             self.move.step();
-        } while (getCurrPx().isWhite())
+        } while (getCurrPx() && getCurrPx().isWhite())
         return getCurrPx();
     }
 
@@ -192,7 +201,7 @@
             var cachedDirection = self.direction;
             self.move.turnOn(directions.right);
             self.move.step();
-            if (getCurrPx().isBlack()) { //если выше и правее белый
+            if (isInside() && getCurrPx().isBlack()) { //если выше и правее белый
                 result.push(getCurrPx());
             }
 
@@ -284,8 +293,12 @@
     }
 
     var markPx = function (state) {
-        if (!state && pixels[self.location.y][self.location.x].isWhite()) {
-            pixels[self.location.y][self.location.x].state = pStates.processed;
+        try {
+            if (isInside() && !state && pixels[self.location.y][self.location.x].isWhite()) {
+                pixels[self.location.y][self.location.x].state = pStates.processed;
+            }
+        } catch (e) {
+            debugger;
         }
     }
 

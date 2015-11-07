@@ -7,7 +7,7 @@ PreviewServise = function () {
     var self = this;
 
     var fileExtesion = '.png';
-    var step = 1500;
+    var step = 900;
 
     self.createPreview = function (object, imgsfolder, callback) {
 
@@ -34,8 +34,12 @@ PreviewServise = function () {
     }
 
     var createImage = function (object, path, callback) {
-        gm(object.Width, object.Height, "#ffffffff").write(path, function () {
-            colorize(object, path, 0, callback);
+        gm(object.Width, object.Height, "#ffffffff").write(path, function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                colorize(object, path, 0, callback);
+            }
         });;
     }
 
@@ -64,7 +68,7 @@ PreviewServise = function () {
         }
     }
 
-    var isFileExists = function(path) {
+    var isFileExists = function (path) {
         try {
             var stats = fs.statSync(path);
             return true;
@@ -74,7 +78,7 @@ PreviewServise = function () {
         }
     }
 
-    var processPath = function(path) {
+    var processPath = function (path) {
         return path.replace('.', '');
     }
 }

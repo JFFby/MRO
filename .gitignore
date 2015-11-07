@@ -233,6 +233,5 @@ $RECYCLE.BIN/
 #bower packages
 bower_components/
 # file storage
-files/**/*.txt
-files/**/*.json
-!*.keep
+#**//files/**/
+#!*.keep

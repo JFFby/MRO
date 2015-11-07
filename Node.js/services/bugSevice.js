@@ -68,7 +68,7 @@ function BugService() {
 
     var pathHelper = {
         a: './public/files/bug_a/',
-        imgs: './public/imgs/',
+        imgs: './public/imgs/a/',
         extensions: {
             json: '.json'
         }

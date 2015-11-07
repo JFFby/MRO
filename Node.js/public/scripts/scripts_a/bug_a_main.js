@@ -1,9 +1,10 @@
 ﻿$(function () {
 
     var imgs = [
-    '../public/imgs/test1.png',
-    '../public/imgs/test2.png',
-    '../public/imgs/work_image.png'
+    '../public/imgs/a/test1.png',
+    '../public/imgs/a/work_image.png',
+    '../public/imgs/a/modified/dilateImage.png',
+    '../public/imgs/a/modified/erodeImage1.png'
     ];
 
     var canvas = document.getElementById("canv");
@@ -12,7 +13,8 @@
     var imgLink = imgs[2];
     img.src = imgLink;
     var isDeepSearch = false;
-    var fullColorize = false;
+    var fullColorize = true;
+    var minObjSize = 100;
     img.onload = function () {
         canvas.width = img.width;
         canvas.height = img.height;
@@ -23,12 +25,13 @@
             width: img.width,
             pixels: $.getMatrixPixels(ctx, img.height, img.width, Pixel_),
             fullColorize: fullColorize,
+            minObjSize: minObjSize,
             resultProcessor: function (data) {
                 var end = new Date();
                 console.log("find: ".concat(end - start));
 
                 var imgName = new RegExp('/(\\w*)[.]').exec(imgLink)[1];
-                var fullName = imgName + '_isDeep_' + isDeepSearch;
+                var fullName = imgName + '_isDeep_' + isDeepSearch + "_" + minObjSize;
                 if (fullColorize) {
                     pushResults(data, fullName).done(function (result) {
                         console.log(result);
