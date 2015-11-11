@@ -43,6 +43,8 @@
     <Content Include="public\scripts\common\inherit.js" />
     <Content Include="public\scripts\common\Pixel.js" />
     <Content Include="public\scripts\common\previewFetcher.js" />
+    <Content Include="public\scripts\scripts_a\binaryExtensionMain.js" />
+    <Content Include="public\scripts\scripts_a\BinaryImageExtension.js" />
     <Content Include="public\scripts\scripts_a\bug_a.js" />
     <Content Include="public\scripts\scripts_a\bug_a_main.js" />
     <Content Include="public\scripts\scripts_a\Colorizer.js" />
@@ -80,7 +82,9 @@
       <DependentUpon>index.css</DependentUpon>
     </None>
     <None Include="public\сss\results\index.less" />
-    <None Include="views\bug_a.jade" />
+    <None Include="views\a\binryExtension.jade" />
+    <None Include="views\a\bug_a .jade" />
+    <None Include="views\a\layout.jade" />
     <None Include="views\results.jade" />
   </ItemGroup>
   <ItemGroup>

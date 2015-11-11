@@ -6,8 +6,8 @@ var path = require('path');
 
 var urlToFetchPreview = "/fetchPreview/";
 
-router.get('/', function (req, res) {
-    res.render("bug_a.jade");
+router.get('/bug', function (req, res) {
+    res.render("./a/bug.jade");
 });
 
 router.post('/push/:name', function (req, res) {
@@ -27,6 +27,10 @@ router.get('/results/:name', function (req, res) {
             localData: data
         });
     });
+});
+
+router.get('/ex', function (req, res) {
+    res.render("./a/binryExtension.jade");
 });
 
 router.get(urlToFetchPreview + ':file', function (req, res) {

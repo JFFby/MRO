@@ -152,7 +152,6 @@
     }
 
     var tryGetObject = function (startPx, oldObject) {
-        //     try {
         var obj = oldObject || {
             number: objects.length + 1,
             color: $.getRandomColor(),
@@ -164,7 +163,8 @@
         do {
             var nextPx = findNextBlackPx();
             if (nextPx) {
-                if (config.isDeepSearch && config.fullColorize) {
+                if (config.isDeepSearch && config.fullColorize && !config.extended) {
+                    console.log('deep deep search');
                     needTocheck = needTocheck || [];
                     needTocheck = needTocheck.concat(findHiddenPxs(nextPx));
                 }
@@ -181,9 +181,6 @@
             object: obj,
             startPxs: needTocheck || []
         };
-        //} catch (e) {
-        //    debugger;
-        //}
     }
 
     var findNextBlackPx = function () {
@@ -197,11 +194,12 @@
     var findHiddenPxs = function (px, isStarted) {
         var result = [];
 
-        if (isStarted) {
+        if (isStarted && !config.extended) {
+            console.log('deep search');
             var cachedDirection = self.direction;
             self.move.turnOn(directions.right);
             self.move.step();
-            if (isInside() && getCurrPx().isBlack()) { //если выше и правее белый
+            if (isInside() && getCurrPx().isBlack()) {
                 result.push(getCurrPx());
             }
 
@@ -210,7 +208,7 @@
             self.location.y = px.Y;
         }
 
-        if (!config.isDeepSearch) return result;
+        if (!config.isDeepSearch || !config.extended) return result;
 
         for (var y = self.location.y - 1, ly = self.location.y + 1; y <= ly; y++) {
             for (var x = self.location.x - 1, slx = self.location.x + 1; x <= slx; x++) {
@@ -244,7 +242,7 @@
         do {
             self.move.step();
             bPx = getCurrPx();
-        } while (isInside() && (!bPx || bPx.isWhite() /*|| !bPx.isNeedToProcess()*/));
+        } while (isInside() && (!bPx || bPx.isWhite()));
 
         return bPx && bPx.isNeedToProcess() ? bPx : null;
     }
