@@ -14,8 +14,9 @@
     var imgLink = imgs[4];
     img.src = imgLink;
     var isDeepSearch = false;
-    var fullColorize = true;
-    var extended = true;
+    var fullColorize = false;
+	// true for not deep search :)
+    var extended = false;
     var minObjSize = 100;
     img.onload = function () {
         canvas.width = img.width;

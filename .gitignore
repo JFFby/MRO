@@ -235,3 +235,4 @@ bower_components/
 # file storage
 #**//files/**/
 #!*.keep
+**/ts/**/*.js

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "homepage": "https://github.com/JFFby/MRO",
   "authors": [
-  "stirGin <balashkow@mail.ru>"
+    "stirGin <balashkow@mail.ru>"
   ],
   "description": "course work",
   "main": "bower.json",
@@ -24,6 +24,7 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "lodash": "~3.10.1",
-    "knockout": "~3.3.0"
+    "knockout": "~3.3.0",
+    "DefinitelyTyped": "*"
   }
 }

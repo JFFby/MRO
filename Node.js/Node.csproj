@@ -83,12 +83,20 @@
     </None>
     <None Include="public\сss\results\index.less" />
     <None Include="views\a\binryExtension.jade" />
-    <None Include="views\a\bug_a .jade" />
+    <None Include="views\a\bug.jade" />
     <None Include="views\a\layout.jade" />
+    <None Include="views\a\thining.jade" />
     <None Include="views\results.jade" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="public\files\bug_a\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\lrtb\Enums.ts" />
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\lrtb\EnviromentPixel.ts" />
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\lrtb\lrtb.ts" />
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\lrtb\lrtb_main.ts" />
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\lrtb\PixelValidator.ts" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

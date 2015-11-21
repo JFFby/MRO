@@ -8,4 +8,10 @@ router.get('/public/*', function (req, res) {
     res.sendFile(file);
 });
 
+router.get('/node_modules/*', function (req, res) {
+    var file = path.resolve(__dirname, '..', '.' + req._parsedUrl.path);
+    console.log(file);
+    res.sendFile(file);
+});
+
 module.exports = router;

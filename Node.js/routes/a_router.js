@@ -10,6 +10,10 @@ router.get('/bug', function (req, res) {
     res.render("./a/bug.jade");
 });
 
+router.get('/thin', function (req, res) {
+    res.render("./a/thining.jade");
+});
+
 router.post('/push/:name', function (req, res) {
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
