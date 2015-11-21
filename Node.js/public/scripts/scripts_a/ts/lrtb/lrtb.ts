@@ -8,7 +8,6 @@ class Thinner {
 
     constructor(private config: any) {
         this.pixels = config.pixels;
-        EnviromentPixel.size = { width: this.config.width, height: this.config.height };
 
         this.dimentionWalkerss = new Array<ILrtbWalker>();
         this.dimentionWalkerss.push({
@@ -61,8 +60,6 @@ class Thinner {
             var validator: PixelValidator = new PixelValidator(this.getEnvirement(pixel.X, pixel.Y), pixel);
             if (!validator.isValid()) {
                 pixel.state = State.PrepareToDelete;
-                //eval("pixel.setRgb($.hexToRgb('#ff0000'));");
-                //pixel.setPixelData(this.config.ctx);
             }
         }
     }
@@ -88,26 +85,9 @@ class Thinner {
                 if (i == y && j == x) continue;
 
                 if (this.isInside(j, i)) {
-                    enviroment.push(new EnviromentPixel(j, i, counter, this.pixels[i][j].isBlack() ? Color.Black : Color.White, this.getFarEnviroment(j, i)));
+                    enviroment.push(new EnviromentPixel(j, i, counter, this.pixels[i][j].isBlack() ? Color.Black : Color.White));
                 } else {
                     enviroment.push(new EnviromentPixel(j, i, counter, Color.White));
-                }
-            }
-        }
-
-        return enviroment;
-    }
-
-    private getFarEnviroment(x: number, y: number): EnviromentPixel[] {
-        var enviroment: Array<EnviromentPixel> = [];
-        var counter = 1;
-        for (var i = y - 1; i <= y + 1; ++i) {
-            for (var j = x - 1; j <= x + 1; ++j) {
-
-                if (i == y && j == x) continue;
-
-                if (this.isInside(j, i) && this.pixels[i][j].isBlack()) {
-                    enviroment.push(new EnviromentPixel(j, i, counter, Color.Black));
                 }
             }
         }
