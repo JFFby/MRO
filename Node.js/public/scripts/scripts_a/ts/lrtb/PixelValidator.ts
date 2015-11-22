@@ -33,6 +33,10 @@ class PixelValidator {
     }
 
     private commonValidation(_1st: number, _2st: number): boolean {
-        return this.enviroment[_1st - 1].color * this.enviroment[_2st - 1].color == 1;
+        var notChecked = this.indexes.where(x => x != _1st && x != _2st);
+        return this.enviroment[_1st - 1].color * this.enviroment[_2st - 1].color == 1 &&
+            ((notChecked.select(x => this.enviroment[x - 1]).sum(x => x.color) == 0)
+                || Enumerable.from(this.enviroment).any((x: EnviromentPixel) => x.isBridgeForThis(this.pixel.X, this.pixel.Y)));
+
     }
 }

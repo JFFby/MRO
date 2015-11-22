@@ -1,6 +1,7 @@
 ﻿/// <reference path="EnviromentPixel.ts"/>
 /// <reference path="Enums.ts"/>
 /// <reference path="PixelValidator.ts"/>
+/// <reference path="../../../bower_components/DefinitelyTyped/lodash/lodash.d.ts"/>
 
 class Thinner {
     private pixels: any;
@@ -8,6 +9,7 @@ class Thinner {
 
     constructor(private config: any) {
         this.pixels = config.pixels;
+        EnviromentPixel.size = { width: this.config.width, height: this.config.height };
 
         this.dimentionWalkerss = new Array<ILrtbWalker>();
         this.dimentionWalkerss.push({
@@ -29,14 +31,19 @@ class Thinner {
     }
 
     public run() {
-        do {
-            var deletedPx = 0;
-            for (var i = 0; i < this.dimentionWalkerss.length; i++) {
-                this.dimentionWalkerss[i].go();
-                deletedPx += this.deleteMarkedPixel();
-            }
-        } while (deletedPx > 0)
+        this.thininIteration(this);
+    }
 
+    private thininIteration(context: Thinner): void {
+        var deletedPx = 0;
+        for (var i = 0; i < context.dimentionWalkerss.length; i++) {
+            context.dimentionWalkerss[i].go();
+            deletedPx += context.deleteMarkedPixel();
+        }
+
+        if (deletedPx > 0) {
+            _.delay(context.thininIteration, 50, context);
+        }
     }
 
     private deleteMarkedPixel(): number {
@@ -85,9 +92,26 @@ class Thinner {
                 if (i == y && j == x) continue;
 
                 if (this.isInside(j, i)) {
-                    enviroment.push(new EnviromentPixel(j, i, counter, this.pixels[i][j].isBlack() ? Color.Black : Color.White));
+                    enviroment.push(new EnviromentPixel(j, i, counter, this.pixels[i][j].isBlack() ? Color.Black : Color.White, this.getFarEnviroment(j, i)));
                 } else {
                     enviroment.push(new EnviromentPixel(j, i, counter, Color.White));
+                }
+            }
+        }
+
+        return enviroment;
+    }
+
+    private getFarEnviroment(x: number, y: number): EnviromentPixel[] {
+        var enviroment: Array<EnviromentPixel> = [];
+        var counter = 1;
+        for (var i = y - 1; i <= y + 1; ++i) {
+            for (var j = x - 1; j <= x + 1; ++j) {
+
+                if (i == y && j == x) continue;
+
+                if (this.isInside(j, i) && this.pixels[i][j].isBlack()) {
+                    enviroment.push(new EnviromentPixel(j, i, counter, Color.Black));
                 }
             }
         }

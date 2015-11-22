@@ -3,16 +3,10 @@
 
 class Program {
     static main(): void {
-        var imgs: string[] = [
-            '../public/imgs/a/lrtb_test.png',
-            '../public/imgs/a/l.png'
-        ];
-
         var canvas: any = document.getElementById("canv");
         var ctx: any = canvas.getContext('2d');
         var img = new Image();
-        var imgLink = imgs[1];
-        img.src = imgLink;
+        img.src = eval('imgLink');
         img.onload = (e: Event) => {
             canvas.width = img.width;
             canvas.height = img.height;

@@ -1,4 +1,12 @@
 extends ./layout.jade
 block scripts
 	script(type="text/javascript", src="/node_modules/linq/linq.min.js")
+	script
+		|var imgs = [
+		|	'../public/imgs/a/lrtb_test.png',
+		|	'../public/imgs/a/l.png',
+		|	'../public/imgs/a/34.png',
+		|	'../public/imgs/a/35.png'
+		|];
+		|var imgLink = imgs[2];
 	script(type="text/javascript", src="../scripts/scripts_a/ts/lrtb/thinnig.js")
