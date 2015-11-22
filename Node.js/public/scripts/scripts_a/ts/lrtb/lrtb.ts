@@ -10,6 +10,7 @@ class Thinner {
     constructor(private config: any) {
         this.pixels = config.pixels;
         EnviromentPixel.size = { width: this.config.width, height: this.config.height };
+        PixelValidator.currentValidator = config.validator;
 
         this.dimentionWalkerss = new Array<ILrtbWalker>();
         this.dimentionWalkerss.push({

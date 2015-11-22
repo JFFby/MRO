@@ -16,7 +16,8 @@ class Program {
                 pixels: eval("$.getMatrixPixels(ctx, img.height, img.width, Pixel_)"),
                 width: img.width,
                 height: img.height,
-                ctx: ctx
+                ctx: ctx,
+                validator: eval('validator')
         });
             thiner.run();
         };
