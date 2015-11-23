@@ -40,6 +40,7 @@
     <Content Include="public\imgs\work_image.png" />
     <Content Include="public\scripts\common\Entity.js" />
     <Content Include="public\scripts\common\Extensions.js" />
+    <Content Include="public\scripts\common\imgSelector.js" />
     <Content Include="public\scripts\common\inherit.js" />
     <Content Include="public\scripts\common\Pixel.js" />
     <Content Include="public\scripts\common\previewFetcher.js" />
@@ -68,6 +69,7 @@
     <Content Include="routes\v_router.js" />
     <Content Include="server.js" />
     <Content Include="services\bugSevice.js" />
+    <Content Include="services\imgService.js" />
     <Content Include="services\previewServise.js" />
     <Content Include="views\index.html" />
   </ItemGroup>
