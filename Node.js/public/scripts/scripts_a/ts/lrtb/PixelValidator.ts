@@ -3,7 +3,7 @@
 
 class PixelValidator {
     static currentValidator: number = 0;
-    
+
     private indexes: linqjs.Enumerable;
     private checkedIndexes: number[][];
     private tdPoints: number[] = [];
@@ -19,20 +19,20 @@ class PixelValidator {
         ];
 
         this.validators = [
-            this.commonValidation1,
-            this.commonValidation2
+            this.isThin,
+            this.isCoherence
         ];
     }
 
     public isValid(): boolean {
-        return this.isEndPoint() || this.isThin();
+       return this.isEndPoint() || this.validators[PixelValidator.currentValidator].apply(this);
     }
 
     private isThin() {
         var result = false;
         Enumerable.from(this.checkedIndexes).forEach((e, i) => {
             if (!result) {
-                result = this.validators[PixelValidator.currentValidator].apply(this, [e[0], e[1]]);
+                result = this.commonValidation(e[0], e[1]);
             }
         });
         return result;
@@ -42,13 +42,13 @@ class PixelValidator {
         return Enumerable.from(this.enviroment).count((i: EnviromentPixel) => i.color == Color.Black) == 1;
     }
 
-    private commonValidation2(_1st: number, _2st: number): boolean {
+    private commonValidation(_1st: number, _2st: number): boolean {
         var notChecked = this.indexes.where(x => x != _1st && x != _2st);
         if (this.enviroment[_1st - 1].color * this.enviroment[_2st - 1].color == 1) {
             this.tdPoints.push(_1st);
             this.tdPoints.push(_2st);
 
-            return (notChecked.where(x => !_.includes(this.tdPoints,x))
+            return (notChecked.where(x => !_.includes(this.tdPoints, x))
                 .select(x => this.enviroment[x - 1]).sum(x => x.color) == 0
                 || Enumerable.from(this.enviroment).any((x: EnviromentPixel) => x.isBridgeForThis(this.pixel.X, this.pixel.Y)));
         } else {
@@ -56,11 +56,43 @@ class PixelValidator {
         }
     }
 
-    private commonValidation1(_1st: number, _2st: number): boolean {
-        var notChecked = this.indexes.where(x => x != _1st && x != _2st);
-        return this.enviroment[_1st - 1].color * this.enviroment[_2st - 1].color == 1 &&
-            (notChecked.select(x => this.enviroment[x - 1]).sum(x => x.color) == 0)
-                || Enumerable.from(this.enviroment).any((x: EnviromentPixel) => x.isBridgeForThis(this.pixel.X, this.pixel.Y));
+    private isCoherence(): boolean {
+        var enviromentQuery = Enumerable.from(this.enviroment);
+        var pixel = enviromentQuery.first((p: EnviromentPixel) => p.color == 1);
+        pixel.status = State.Processed;
+        var result = this.collectPixels(pixel, []);
+        enviromentQuery.forEach((e, i) => {
+            if (e.status == State.Processed) {
+                e.status = State.NotProcessed;
+            }
+        })
+        return result;
+    }
 
+    private collectPixels(pixel: EnviromentPixel, pixels: EnviromentPixel[]): boolean {
+        var x = pixel.x, y = pixel.y;
+        var query = [];
+        for (var i = y - 1; i <= y + 1; ++i) {
+            for (var j = x - 1; j <= x + 1; ++j) {
+
+                if (i == y && j == x) continue;
+
+                query.push('i.x == ' + j + ' && i.y==' + i);
+            }
+        }
+
+        var queryString = '(' + query.join(' || ') + ')';
+        var nPixels = _.chain(this.enviroment).filter((i: EnviromentPixel) => eval(queryString)
+            && i.status == State.NotProcessed && i.color == 1)
+            .each((px: EnviromentPixel) => px.status = State.Processed).value();
+        pixels = pixels.concat(nPixels);
+
+        if (pixels.length > 0) {
+            this.collectPixels(pixels.pop(), pixels);
+        }
+
+        
+
+        return _.any(this.enviroment, (p: EnviromentPixel) => p.status == State.NotProcessed && p.color == 1);
     }
 }

@@ -3,24 +3,30 @@
 
 class Program {
     static main(): void {
-        var canvas: any = document.getElementById("canv");
-        var ctx: any = canvas.getContext('2d');
-        var img = new Image();
-        img.src = eval('imgLink');
-        img.onload = (e: Event) => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0, img.width, img.height);
 
-            var thiner: Thinner = new Thinner({
-                pixels: eval("$.getMatrixPixels(ctx, img.height, img.width, Pixel_)"),
-                width: img.width,
-                height: img.height,
-                ctx: ctx,
-                validator: eval('validator')
-        });
-            thiner.run();
-        };
+        var canvId = 'canv';
+
+        var start = new Date();
+        var options = {
+            url: '/imgs',
+            path: 'public/imgs/a',
+            img: canvId,
+            defaultImg: eval("defaultImg"),
+            onclick: (ctx, img) => {
+                var thiner: Thinner = new Thinner({
+                    pixels: eval("$.getMatrixPixels(ctx, img.height, img.width, Pixel_)"),
+                    width: img.width,
+                    height: img.height,
+                    startTime: start,
+                    ctx: ctx,
+                    validator: eval('validator')
+                });
+                start = new Date();
+                thiner.run();
+            }
+        }
+
+        eval("$('.imgSelector').imgSelector(options)");
     }
 } 
 

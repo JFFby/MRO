@@ -5,6 +5,7 @@ class EnviromentPixel {
     static size = { width: 0, height: 0 };
 
     private isBoundaryPx: boolean;
+    public status : State;
 
     constructor(
         public x: number,
@@ -13,6 +14,7 @@ class EnviromentPixel {
         public color: Color,
         private enviroment?: EnviromentPixel[]) {
         this.isBoundaryPx = x == EnviromentPixel.size.width - 1 || y == EnviromentPixel.size.height - 1;
+        this.status = State.NotProcessed;
     }
 
     isBridgeForThis(x: number, y: number): boolean {

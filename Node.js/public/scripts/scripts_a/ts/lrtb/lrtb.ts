@@ -44,6 +44,9 @@ class Thinner {
 
         if (deletedPx > 0) {
             _.delay(context.thininIteration, 50, context);
+        } else {
+            var end = new Date();
+            console.log('elapsed time: ' + eval("(end - context.config.startTime)"));
         }
     }
 
@@ -93,7 +96,13 @@ class Thinner {
                 if (i == y && j == x) continue;
 
                 if (this.isInside(j, i)) {
-                    enviroment.push(new EnviromentPixel(j, i, counter, this.pixels[i][j].isBlack() ? Color.Black : Color.White, this.getFarEnviroment(j, i)));
+                    enviroment.push(new EnviromentPixel(j,
+                        i,
+                        counter,
+                        this.pixels[i][j].isBlack() ?
+                            Color.Black : Color.White,
+                        this.config.validator == 0 ?
+                            this.getFarEnviroment(j, i) : null));
                 } else {
                     enviroment.push(new EnviromentPixel(j, i, counter, Color.White));
                 }

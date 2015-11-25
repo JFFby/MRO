@@ -2,7 +2,20 @@
 
     var defaults = {
         img: 'canv',
-        btnId: '#start'
+        btnId: '#start',
+        defaultImg: null
+    }
+
+    function setImg(value, canvas, ctx) {
+        var img = new Image();
+        img.src = value;
+        img.onload = function () {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+        }
+
+        return img;
     }
 
     var methods = {
@@ -18,16 +31,10 @@
 
             $element.on('change', function () {
                 var value = $('option:selected', this).text();
-                img = new Image();
-                img.src = value;
-                img.onload = function () {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx.drawImage(img, 0, 0, img.width, img.height);
-                }
+                img = setImg(value, canvas, ctx);
             });
 
-            $(options.btnId).on('click', function() {
+            $(options.btnId).on('click', function () {
                 options.onclick.call(window, ctx, img);
             });
 
@@ -38,14 +45,25 @@
                 data: { path: options.path },
                 success: function (data) {
                     data = JSON.parse(data);
+                    var items = [];
                     $.each(data.files, function (i, item) {
                         item = item.replace(data.basePath, '').replace(new RegExp('[/\]', 'g'), '//');
+                        items.push({ value: i, key: item });
                         $element
                             .append($('<option>', { value: i })
                                 .text(item));
                     });
 
-
+                    if (options.defaultImg) {
+                        var reg = new RegExp(options.defaultImg, 'i');
+                        var defaultImgs = _.filter(items, function (i) {
+                            return reg.test(i.key);
+                        });
+                        if (defaultImgs.length > 0) {
+                            img = setImg(defaultImgs[0].key, canvas, ctx);
+                            $('[value="' + defaultImgs[0].value + '"]').prop('selected', true);
+                        }
+                    }
                 }
             });
         }
