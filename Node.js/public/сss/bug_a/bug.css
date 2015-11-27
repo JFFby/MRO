@@ -3,10 +3,19 @@
 }
 .container {
   margin: 10% auto auto auto;
-  width: 600px;
-  height: 600px;
+  width: 950px;
+  height: 700px;
 }
 .container #canv {
   background-color: aqua;
+}
+.tableWrapper {
+  max-width: 920px;
+  max-height: 600px;
+  overflow: scroll;
+  margin-top: 7px;
+}
+.tableWrapper td {
+  width: 100px!important;
 }
 /*# sourceMappingURL=bug.css.map */

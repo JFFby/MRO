@@ -38,7 +38,7 @@
                 options.onclick.call(window, ctx, img);
             });
 
-            $element.parent().css('display', 'block');
+            $element.closest('.ui.form').css('display', 'block');
             $.ajax({
                 method: 'GET',
                 url: options.url,

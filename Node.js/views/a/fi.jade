@@ -1,0 +1,18 @@
+extends ./layout.jade
+block body
+	div.tableWrapper(data-bind="visible:isTableVisible")
+		|<!-- ko template: {name: "tableTemplate"} -->
+		|<!-- /ko -->
+block scripts
+	script(type = "text/html", id="tableTemplate")
+		table.ui.celled.table
+			thead
+			tbody(data-bind="foreach: {data:cellItem}")
+				tr(data-bind="foreach:{data:items, as:'item'}")
+					td(data-bind='css:{"negative": item.color == 1}')
+						p(data-bind="text:item.value")
+	script
+		|var defaultImg = 'l.png';
+		|var mask = 0;
+	script(type="text/javascript" src="/../../scripts/bower_components/knockout/dist/knockout.js")
+	script(type="text/javascript", src="../scripts/scripts_a/ts/fi/fi.js")

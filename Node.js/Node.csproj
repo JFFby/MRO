@@ -86,6 +86,7 @@
     <None Include="public\сss\results\index.less" />
     <None Include="views\a\binryExtension.jade" />
     <None Include="views\a\bug.jade" />
+    <None Include="views\a\fi.jade" />
     <None Include="views\a\layout.jade" />
     <None Include="views\a\thining.jade" />
     <None Include="views\results.jade" />
@@ -94,6 +95,10 @@
     <Folder Include="public\files\bug_a\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\FeatureInformativeness.ts" />
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\FiObject.ts" />
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\FiViewModel.ts" />
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\fi_main.ts" />
     <TypeScriptCompile Include="public\scripts\scripts_a\ts\lrtb\Enums.ts" />
     <TypeScriptCompile Include="public\scripts\scripts_a\ts\lrtb\EnviromentPixel.ts" />
     <TypeScriptCompile Include="public\scripts\scripts_a\ts\lrtb\lrtb.ts" />
