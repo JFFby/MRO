@@ -71,7 +71,7 @@ module FI {
 
         private onDone() {
             var end = new Date();
-            eval("console.log('elapsed time: ' + (end - context.config.startTime))");
+            eval("console.log('elapsed time: ' + (end - this.config.startTime))");
             this.config.onDone && this.config.onDone();
         }
     }

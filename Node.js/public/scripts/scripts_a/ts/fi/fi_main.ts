@@ -8,7 +8,7 @@ module FI {
         static main(): void {
             var canvId = 'canv';
             var viewModel = new FI.FiViewModel({});
-            $('.container, .tableWrapper').css('width','100%').css('max-width','none');
+            $('.container, .tableWrapper').css('width','96%').css('max-width','none');
             var options = {
                 url: '/imgs',
                 path: 'public/imgs/a',
@@ -24,7 +24,10 @@ module FI {
                         accept: (o) => {
                             viewModel.addItems(o);
                         },
-                        mask: eval('mask')
+                        mask: eval('mask'),
+                        onDone: () => {
+                            viewModel.createSpliter();
+                        }
                     });
                     fi.run();
                 }
