@@ -106,168 +106,116 @@ module FI {
         private processSector(sector: Sector, item: FiObject) {
             switch (sector.number) {
                 case 1:
-                    this.sp1(sector, item);
+                    this.baseSp(sector, item, 'bt', this.sp1);
                     break;
                 case 2:
-                    this.sp2(sector, item);
+                    this.baseSp(sector, item, 'bt', this.sp2);
                     break;
                 case 3:
-                    this.sp3(sector, item);
+                    this.baseSp(sector, item, 'bf', this.sp3);
                     break;
                 case 4:
-                    this.sp4(sector, item);
+                    this.baseSp(sector, item, 'bf', this.sp4);
                     break;
                 case 5:
-                    this.sp5(sector, item);
+                    this.baseSp(sector, item, 'bt', this.sp5);
                     break;
                 case 6:
-                    this.sp6(sector, item);
+                    this.baseSp(sector, item, 'bt', this.sp6);
                     break;
                 case 7:
-                    this.sp7(sector, item);
+                    this.baseSp(sector, item, 'bf', this.sp7);
                     break;
                 case 8:
-                    this.sp8(sector, item);
+                    this.baseSp(sector, item, 'bf', this.sp8);
                     break;
                 default:
                     throw new Error("wrong args");
             }
         }
 
-        private sp1(sector: Sector, item: FiObject) {
+        private baseSp(sector: Sector, item: FiObject, bound: string, fn) {
             sector.sortByY();
-            var lenght = sector.bt().length;
+            var lenght = sector[bound]().length;
             var result = [];
             var anotherItems = _.reject(this.items, i => i.x == item.x && i.y == item.y);
             for (var i = 0; i < lenght; i++) {
-                var ci = sector.bt()[i];
-                result = result.concat(_.filter(anotherItems,
-                    (p: FiObject) => {
-                        return p.y == ci.y && p.x > ci.x;
-                    }));
+                result = result.concat(fn(sector, i, anotherItems));
             }
 
             sector.code = result.length;
         }
 
-        private sp2(sector: Sector, item: FiObject) {
-            sector.sortByY();
-            var lenght = sector.bt().length;
-            var result = [];
-            var anotherItems = _.reject(this.items, i => i.x == item.x && i.y == item.y);
-            for (var i = 0; i < lenght; i++) {
-                var ci = sector.bt()[i];
-                var fbIndex = _.findIndex(sector.bf(), 'y', ci.y);
-                var fb = fbIndex == -1 ? null : sector.bf()[fbIndex];
-                result = result.concat(_.filter(anotherItems,
-                    (p: FiObject) => {
-                        return p.y == ci.y && p.x > ci.x && (!fb || p.x <= fb.x);
-                    }));
-            }
-
-            sector.code = result.length;
+        private sp1(sector: Sector, i: number, anotherItems: FiObject[]) {
+            var ci = sector.bt()[i];
+            return _.filter(anotherItems,
+                (p: FiObject) => {
+                    return p.y == ci.y && p.x > ci.x;
+                });
         }
 
-        private sp3(sector: Sector, item: FiObject) {
-            sector.sortByY();
-            var lenght = sector.bf().length;
-            var result = [];
-            var anotherItems = _.reject(this.items, i => i.x == item.x && i.y == item.y);
-            for (var i = 0; i < lenght; i++) {
-                var ci = sector.bf()[i];
-                var tbIndex = _.findIndex(sector.bt(), 'y', ci.y);
-                var tb = tbIndex == -1 ? null : sector.bt()[tbIndex];
-                result = result.concat(_.filter(anotherItems,
-                    (p: FiObject) => {
-                        return p.y == ci.y && p.x <= ci.x && (!tb || p.x > tb.x);
-                    }));
-            }
-
-            sector.code = result.length;
+        private sp2(sector: Sector, i: number, anotherItems: FiObject[]) {
+            var ci = sector.bt()[i];
+            var fbIndex = _.findIndex(sector.bf(), 'y', ci.y);
+            var fb = fbIndex == -1 ? null : sector.bf()[fbIndex];
+            return _.filter(anotherItems,
+                (p: FiObject) => {
+                    return p.y == ci.y && p.x > ci.x && (!fb || p.x <= fb.x);
+                });
         }
 
-        private sp4(sector: Sector, item: FiObject) {
-            sector.sortByY();
-            var lenght = sector.bf().length;
-            var result = [];
-            var anotherItems = _.reject(this.items, i => i.x == item.x && i.y == item.y);
-            for (var i = 0; i < lenght; i++) {
-                var ci = sector.bf()[i];
-                result = result.concat(_.filter(anotherItems,
-                    (p: FiObject) => {
-                        return p.y == ci.y && p.x < ci.x;
-                    }));
-            }
-
-            sector.code = result.length;
+        private sp3(sector: Sector, i: number, anotherItems: FiObject[]) {
+            var ci = sector.bf()[i];
+            var tbIndex = _.findIndex(sector.bt(), 'y', ci.y);
+            var tb = tbIndex == -1 ? null : sector.bt()[tbIndex];
+            return _.filter(anotherItems,
+                (p: FiObject) => {
+                    return p.y == ci.y && p.x <= ci.x && (!tb || p.x > tb.x);
+                });
         }
 
-        private sp5(sector: Sector, item: FiObject) {
-            sector.sortByY();
-            var lenght = sector.bt().length;
-            var result = [];
-            var anotherItems = _.reject(this.items, i => i.x == item.x && i.y == item.y);
-            for (var i = 0; i < lenght; i++) {
-                var ci = sector.bt()[i];
-                result = result.concat(_.filter(anotherItems,
-                    (p: FiObject) => {
-                        return p.y == ci.y && p.x < ci.x;
-                    }));
-            }
-
-            sector.code = result.length;
+        private sp4(sector: Sector, i: number, anotherItems: FiObject[]) {
+            var ci = sector.bf()[i];
+            return _.filter(anotherItems,
+                (p: FiObject) => {
+                    return p.y == ci.y && p.x < ci.x;
+                });
         }
 
-        private sp6(sector: Sector, item: FiObject) {
-            sector.sortByY();
-            var lenght = sector.bt().length;
-            var result = [];
-            var anotherItems = _.reject(this.items, i => i.x == item.x && i.y == item.y);
-            for (var i = 0; i < lenght; i++) {
-                var ci = sector.bt()[i];
-                var fbIndex = _.findIndex(sector.bf(), 'y', ci.y);
-                var fb = fbIndex == -1 ? null : sector.bf()[fbIndex];
-                result = result.concat(_.filter(anotherItems,
-                    (p: FiObject) => {
-                        return p.y == ci.y && p.x < ci.x && (!fb || fb.x <= p.x);
-                    }));
-            }
-
-            sector.code = result.length;
+        private sp5(sector: Sector, i: number, anotherItems: FiObject[]) {
+            var ci = sector.bt()[i];
+            return _.filter(anotherItems,
+                (p: FiObject) => {
+                    return p.y == ci.y && p.x < ci.x;
+                });
         }
 
-        private sp7(sector: Sector, item: FiObject) {
-            sector.sortByY();
-            var lenght = sector.bf().length;
-            var result = [];
-            var anotherItems = _.reject(this.items, i => i.x == item.x && i.y == item.y);
-            for (var i = 0; i < lenght; i++) {
-                var ci = sector.bf()[i];
-                var tbIndex = _.findIndex(sector.bt(), 'y', ci.y);
-                var tb = tbIndex == -1 ? null : sector.bt()[tbIndex];
-                result = result.concat(_.filter(anotherItems,
-                    (p: FiObject) => {
-                        return p.y == ci.y && p.x > ci.x && (!tb || tb.x > p.x);
-                    }));
-            }
-
-            sector.code = result.length;
+        private sp6(sector: Sector, i: number, anotherItems: FiObject[]) {
+            var ci = sector.bt()[i];
+            var fbIndex = _.findIndex(sector.bf(), 'y', ci.y);
+            var fb = fbIndex == -1 ? null : sector.bf()[fbIndex];
+            return _.filter(anotherItems,
+                (p: FiObject) => {
+                    return p.y == ci.y && p.x < ci.x && (!fb || fb.x <= p.x);
+                });
         }
 
-        private sp8(sector: Sector, item: FiObject) {
-            sector.sortByY();
-            var lenght = sector.bf().length;
-            var result = [];
-            var anotherItems = _.reject(this.items, i => i.x == item.x && i.y == item.y);
-            for (var i = 0; i < lenght; i++) {
-                var ci = sector.bf()[i];
-                result = result.concat(_.filter(anotherItems,
-                    (p: FiObject) => {
-                        return p.y == ci.y && p.x > ci.x;
-                    }));
-            }
+        private sp7(sector: Sector, i: number, anotherItems: FiObject[]) {
+            var ci = sector.bf()[i];
+            var tbIndex = _.findIndex(sector.bt(), 'y', ci.y);
+            var tb = tbIndex == -1 ? null : sector.bt()[tbIndex];
+            return _.filter(anotherItems,
+                (p: FiObject) => {
+                    return p.y == ci.y && p.x > ci.x && (!tb || tb.x > p.x);
+                });
+        }
 
-            sector.code = result.length;
+        private sp8(sector: Sector, i: number, anotherItems: FiObject[]) {
+            var ci = sector.bf()[i];
+            return _.filter(anotherItems,
+                (p: FiObject) => {
+                    return p.y == ci.y && p.x > ci.x;
+                });
         }
 
         private toRad(angel: number) {
@@ -298,4 +246,4 @@ module FI {
             }
         }
     }
-} 
+}
