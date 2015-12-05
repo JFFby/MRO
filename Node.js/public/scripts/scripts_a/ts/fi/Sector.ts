@@ -5,7 +5,6 @@
         private fMinY: number;
         private tMaxY: number;
         private tMinY: number;
-        public code: number;
 
         constructor(public from: number, public to: number, public number: number) {
             this.bound = {};

@@ -9,7 +9,7 @@ module FI {
         private sectors: SectorCollection;
         private width: number;
         private height: number;
-        private items: FiObject[];
+        private items: HElement[];
         private searchTemplates = [
             {
                 value: [
@@ -46,9 +46,9 @@ module FI {
             return parseFloat(Math.sqrt(value).toString().substring(0, 5));
         }
 
-        public run() {
+        public run(): HElement[] {
             this.items = this.getCharacteristicItems();
-            this.buildCodes(this.items);
+            return this.buildCodes(this.items);
         }
 
         private getSectors(items) {
@@ -61,23 +61,25 @@ module FI {
             return _.compact(result);
         }
 
-        private getCharacteristicItems(): FiObject[] {
+        private getCharacteristicItems(): HElement[] {
             var value = this.searchValue.toString();
             var result: FiObject[] = [];
             _.forEach(this.pixels, (items) => {
                 result = result.concat(_.filter(items, 'value', value));
             });
 
-            return result;
+            return _.map(result, (r: FiObject) => new HElement(r));
         }
 
-        private buildCodes(items: FiObject[]) {
+        private buildCodes(items: HElement[]): HElement[] {
             for (var i = 0; i < items.length; i++) {
                 this.buildCode(items[i]);
             }
+
+            return items;
         }
 
-        private buildCode(item: FiObject) {
+        private buildCode(item: HElement) {
             this.sectors.setItem(item);
             for (var i = 0; i < this.sectors.length(); i++) {
                 this.serchSector(this.sectors.i(i), item);
@@ -86,7 +88,7 @@ module FI {
             this.sectors.clear();
         }
 
-        private serchSector(sector: Sector, item: FiObject) {
+        private serchSector(sector: Sector, item: HElement) {
             this.createSectorBound(sector.from, sector);
             this.createSectorBound(sector.to, sector);
             this.processSector(sector, item);
@@ -103,7 +105,7 @@ module FI {
             }
         }
 
-        private processSector(sector: Sector, item: FiObject) {
+        private processSector(sector: Sector, item: HElement) {
             switch (sector.number) {
                 case 1:
                     this.baseSp(sector, item, 'bt', this.sp1);
@@ -134,7 +136,7 @@ module FI {
             }
         }
 
-        private baseSp(sector: Sector, item: FiObject, bound: string, fn) {
+        private baseSp(sector: Sector, item: HElement, bound: string, fn) {
             sector.sortByY();
             var lenght = sector[bound]().length;
             var result = [];
@@ -143,78 +145,81 @@ module FI {
                 result = result.concat(fn(sector, i, anotherItems));
             }
 
-            sector.code = result.length;
+            item.setCode(sector.number - 1, result.length);
         }
 
-        private sp1(sector: Sector, i: number, anotherItems: FiObject[]) {
+        private sp1(sector: Sector, i: number, anotherItems: HElement[]) {
             var ci = sector.bt()[i];
             return _.filter(anotherItems,
-                (p: FiObject) => {
+                (p: HElement) => {
                     return p.y == ci.y && p.x > ci.x;
                 });
         }
 
-        private sp2(sector: Sector, i: number, anotherItems: FiObject[]) {
+        private sp2(sector: Sector, i: number, anotherItems: HElement[]) {
             var ci = sector.bt()[i];
+            var exceptedX = sector.bt()[0].x;
             var fbIndex = _.findIndex(sector.bf(), 'y', ci.y);
             var fb = fbIndex == -1 ? null : sector.bf()[fbIndex];
             return _.filter(anotherItems,
-                (p: FiObject) => {
-                    return p.y == ci.y && p.x > ci.x && (!fb || p.x <= fb.x);
+                (p: HElement) => {
+                    return p.y == ci.y && p.x != exceptedX && p.x > ci.x && (!fb || p.x <= fb.x);
                 });
         }
 
-        private sp3(sector: Sector, i: number, anotherItems: FiObject[]) {
+        private sp3(sector: Sector, i: number, anotherItems: HElement[]) {
             var ci = sector.bf()[i];
             var tbIndex = _.findIndex(sector.bt(), 'y', ci.y);
             var tb = tbIndex == -1 ? null : sector.bt()[tbIndex];
             return _.filter(anotherItems,
-                (p: FiObject) => {
+                (p: HElement) => {
                     return p.y == ci.y && p.x <= ci.x && (!tb || p.x > tb.x);
                 });
         }
 
-        private sp4(sector: Sector, i: number, anotherItems: FiObject[]) {
+        private sp4(sector: Sector, i: number, anotherItems: HElement[]) {
             var ci = sector.bf()[i];
+            var exceptedY = sector.bt()[sector.bt().length - 1].y;
             return _.filter(anotherItems,
-                (p: FiObject) => {
+                (p: HElement) => {
+                    return p.y == ci.y && p.x < ci.x && p.y != exceptedY;
+                });
+        }
+
+        private sp5(sector: Sector, i: number, anotherItems: HElement[]) {
+            var ci = sector.bt()[i];
+            return _.filter(anotherItems,
+                (p: HElement) => {
                     return p.y == ci.y && p.x < ci.x;
                 });
         }
 
-        private sp5(sector: Sector, i: number, anotherItems: FiObject[]) {
+        private sp6(sector: Sector, i: number, anotherItems: HElement[]) {
             var ci = sector.bt()[i];
-            return _.filter(anotherItems,
-                (p: FiObject) => {
-                    return p.y == ci.y && p.x < ci.x;
-                });
-        }
-
-        private sp6(sector: Sector, i: number, anotherItems: FiObject[]) {
-            var ci = sector.bt()[i];
+            var exceptedX = sector.bt()[0].x
             var fbIndex = _.findIndex(sector.bf(), 'y', ci.y);
             var fb = fbIndex == -1 ? null : sector.bf()[fbIndex];
             return _.filter(anotherItems,
-                (p: FiObject) => {
-                    return p.y == ci.y && p.x < ci.x && (!fb || fb.x <= p.x);
+                (p: HElement) => {
+                    return p.y == ci.y && p.x != exceptedX && p.x < ci.x && (!fb || fb.x <= p.x);
                 });
         }
 
-        private sp7(sector: Sector, i: number, anotherItems: FiObject[]) {
+        private sp7(sector: Sector, i: number, anotherItems: HElement[]) {
             var ci = sector.bf()[i];
             var tbIndex = _.findIndex(sector.bt(), 'y', ci.y);
             var tb = tbIndex == -1 ? null : sector.bt()[tbIndex];
             return _.filter(anotherItems,
-                (p: FiObject) => {
+                (p: HElement) => {
                     return p.y == ci.y && p.x > ci.x && (!tb || tb.x > p.x);
                 });
         }
 
-        private sp8(sector: Sector, i: number, anotherItems: FiObject[]) {
+        private sp8(sector: Sector, i: number, anotherItems: HElement[]) {
             var ci = sector.bf()[i];
             return _.filter(anotherItems,
-                (p: FiObject) => {
-                    return p.y == ci.y && p.x > ci.x;
+                (p: HElement) => {
+                    return p.y == ci.y && p.x > ci.x && p.y != sector.bt()[0].y;
                 });
         }
 

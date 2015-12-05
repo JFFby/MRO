@@ -1,5 +1,11 @@
 extends ./layout.jade
 block body
+	div
+		span table visible 
+		input(type="checkbox" data-bind="checked:showTable")/
+	div
+		|<!-- ko template: {name: "hElements"} -->
+		|<!-- /ko -->
 	div.tableWrapper(data-bind="visible:isTableVisible")
 		|<!-- ko template: {name: "tableTemplate"} -->
 		|<!-- /ko -->
@@ -11,6 +17,11 @@ block scripts
 				tr(data-bind="foreach:{data:items, as:'item'}")
 					td(data-bind='css:{"negative": item.color == 1}, attr:{"data-value": item.value.replace(".","-")}')
 						p(data-bind="text:item.value, attr:{'data-x':item.x, 'data-y':item.y}")
+	script(type = "text/html", id="hElements")
+		p Characteristic Elements
+		ul(data-bind="foreach:hElements" class="ce")
+			li
+				span(data-bind="text:fullName") 
 	script
 		|var defaultImg = 'l.png';
 		|var mask = 0;

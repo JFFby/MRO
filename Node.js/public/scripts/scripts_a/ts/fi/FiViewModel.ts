@@ -1,27 +1,53 @@
 ﻿/// <reference path="../../../bower_components/DefinitelyTyped/knockout/knockout.d.ts"/>
+/// <reference path="../../../bower_components/DefinitelyTyped/lodash/lodash.d.ts"/>
 /// <reference path="Spliter.ts"/>
 /// <reference path="CodeBuilder.ts"/>
 
 module FI {
     export class FiViewModel {
         public spliter;
+        public hElements;
+        public showTable
+        private cellItemCach;
 
-        constructor(config: Object) { }
+        constructor(config: Object) {
+            this.cellItemCach = [];
+            this.hElements = ko.observableArray<HElement>([]);
+            this.showTable = ko.observable(false);
+            this.showTable.subscribe((value) => {
+                if (value) {
+                    this.cellItem(this.cellItemCach);
+                } else {
+                    var self = this;
+                    _.delay(function () { self.cellItemCach = this.cellItem(); }, 20);
+                }
+            });
+        }
 
         public cellItem = ko.observableArray([]);
+
         public isTableVisible = ko.computed(() => {
-            return this.cellItem().length > 0;
+            return this.cellItem().length > 0 && this.showTable();
         });
 
+        public isCeListVisible = ko.computed(() => typeof this.hElements == "function"
+            && this.hElements().length > 0);
+
         public addItems(items: FI.FiObject[]) {
-            var array = this.cellItem() || [];
-            this.cellItem(array.concat([{ items: items}]));
+            var elements = [{ items: items }];
+            if (this.showTable()) {
+                var array = this.cellItem() || [];
+                this.cellItem(array.concat(elements));
+            } else {
+                this.cellItemCach = this.cellItemCach.concat(elements);
+            }
         }
 
         public createSpliter() {
             //this.spliter = new FI.Spliter(this.cellItem());
-            var codeBuilder = new CodeBuilder(this.cellItem());
-            codeBuilder.run();
+            var codeBuilder = new CodeBuilder(this.showTable() ? this.cellItem() : this.cellItemCach);
+            var he = codeBuilder.run();
+            this.hElements(he);
         }
     }
 }
