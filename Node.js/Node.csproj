@@ -44,6 +44,8 @@
     <Content Include="public\scripts\common\inherit.js" />
     <Content Include="public\scripts\common\Pixel.js" />
     <Content Include="public\scripts\common\previewFetcher.js" />
+    <Content Include="public\scripts\scripts_a\binarization.js" />
+    <Content Include="public\scripts\scripts_a\binarization_main.js" />
     <Content Include="public\scripts\scripts_a\binaryExtensionMain.js" />
     <Content Include="public\scripts\scripts_a\BinaryImageExtension.js" />
     <Content Include="public\scripts\scripts_a\bug_a.js" />
@@ -69,6 +71,7 @@
     <Content Include="routes\v_router.js" />
     <Content Include="server.js" />
     <Content Include="services\bugSevice.js" />
+    <Content Include="services\fiService.js" />
     <Content Include="services\imgService.js" />
     <Content Include="services\previewServise.js" />
     <Content Include="views\index.html" />
@@ -84,6 +87,7 @@
       <DependentUpon>index.css</DependentUpon>
     </None>
     <None Include="public\сss\results\index.less" />
+    <None Include="views\a\bin.jade" />
     <None Include="views\a\binryExtension.jade" />
     <None Include="views\a\bug.jade" />
     <None Include="views\a\fi.jade" />

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
 var bugService = require('./../services/bugSevice');
+var fiSErvice = require('./../services/fiService');
 var path = require('path');
 
 var urlToFetchPreview = "/fetchPreview/";
@@ -16,6 +17,21 @@ router.get('/thin', function (req, res) {
 
 router.get('/fi', function (req, res) {
     res.render("./a/fi.jade");
+});
+
+router.get('/bin', function (req, res) {
+    res.render("./a/bin.jade");
+});
+
+router.post('/fi/save', function (req, res) {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields) {
+        console.log(JSON.stringify(fields));
+        var data = JSON.parse(fields.data);
+        fiSErvice.save(data.num, data.code);
+        res.end();
+    });
+   
 });
 
 router.post('/push/:name', function (req, res) {
