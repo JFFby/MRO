@@ -100,8 +100,10 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\CodeBuilder.ts" />
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\DetermineService.ts" />
     <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\FeatureInformativeness.ts" />
     <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\FiObject.ts" />
+    <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\fiService.ts" />
     <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\FiViewModel.ts" />
     <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\fi_main.ts" />
     <TypeScriptCompile Include="public\scripts\scripts_a\ts\fi\Sector.ts" />

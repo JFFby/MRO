@@ -15,6 +15,7 @@ module FI {
                 img: canvId,
                 defaultImg: eval("defaultImg"),
                 onclick: (ctx, img) => {
+                    viewModel.showSpiner();
                     var fi = new FI.FeatureInformativeness({
                         pixels: eval("$.getMatrixPixels(ctx, img.height, img.width, Pixel_)"),
                         width: img.width,

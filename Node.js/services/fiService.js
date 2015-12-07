@@ -5,16 +5,19 @@ function FiService() {
     var path = './public/files/fi/codes.json';
 
 
-    self.save = function (number, code) {
-        console.log(JSON.stringify(code));
+    self.save = function (number, codes) {
+
+        if (number.toString().length == 0) {
+            return;
+        }
+
         fs.stat(path, function (err, stat) {
             if (err == null) {
-                addNewCode(number, code);
+                addNewCode(number, codes);
             } else if (err.code == 'ENOENT') {
                 var obj = {}
-                obj[number] = [code];
-
-                console.log('code + ' +JSON.stringify(obj));
+                obj.numbers = [number];
+                obj = writeCodes(obj, codes, number);
                 fs.writeFile(path, JSON.stringify(obj));
             } else {
                 console.log('Some other error: ', err.code);
@@ -23,12 +26,29 @@ function FiService() {
         });
     }
 
-    var addNewCode = function (number, code) {
+    self.get = function() {
+        return fs.readFileSync(path);
+    }
+
+    var addNewCode = function (number, codes) {
         var content = fs.readFileSync(path);
-        console.log(content);
         var obj = JSON.parse(content);
-        obj[number] = obj[number] ? obj[number].concat([code]) : [code];
+        obj.numbers = obj.numbers.concat([number]);
+        obj = writeCodes(obj, codes, number);
         fs.writeFile(path, JSON.stringify(obj));
+    }
+
+    var writeCodes = function (obj, codes, number) {
+        codes = codes || [];
+        for (var i = 0; i < codes.length; i++) {
+            pushCode(obj, codes[i], number);
+        }
+
+        return obj;
+    }
+
+    var pushCode = function (obj, code, number) {
+        obj[code] = obj[code] ? obj[code].concat(number) : [number];
     }
 }
 

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var formidable = require('formidable');
 var bugService = require('./../services/bugSevice');
-var fiSErvice = require('./../services/fiService');
+var fiService = require('./../services/fiService');
 var path = require('path');
 
 var urlToFetchPreview = "/fetchPreview/";
@@ -28,10 +28,14 @@ router.post('/fi/save', function (req, res) {
     form.parse(req, function (err, fields) {
         console.log(JSON.stringify(fields));
         var data = JSON.parse(fields.data);
-        fiSErvice.save(data.num, data.code);
+        fiService.save(data.num, data.code);
         res.end();
     });
-   
+});
+
+router.get('/fi/get', function (req, res) {
+    res.write(fiService.get());
+    res.end();
 });
 
 router.post('/push/:name', function (req, res) {
