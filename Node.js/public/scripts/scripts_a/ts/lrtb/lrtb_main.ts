@@ -9,7 +9,7 @@ class Program {
         var start = new Date();
         var options = {
             url: '/imgs',
-            path: 'public/imgs/a',
+            path: 'public/imgs/a/main/thin',
             img: canvId,
             defaultImg: eval("defaultImg"),
             onclick: (ctx, img) => {

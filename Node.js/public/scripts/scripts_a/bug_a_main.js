@@ -11,7 +11,7 @@
             var isDeepSearch = false;
             var fullColorize = true;
             // true for not deep search :)
-            var extended = false;
+            var extended = true;
             var minObjSize = 100;
 
             var bug = new Bug({

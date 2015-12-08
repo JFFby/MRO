@@ -86,7 +86,6 @@
     self.Run = function () {
         var obj = findObject();
         if (obj) {
-            console.log(obj);
             colorizer.colorize(obj, pixels, config.ctx);
             if (obj.pixels.length > config.minObjSize) {
                 objects.push(new imgEntity(obj));

@@ -4,7 +4,7 @@
 
     $('.imgSelector').imgSelector({
         url: '/imgs',
-        path: 'public/imgs/a',
+        path: 'public/imgs/a/main/ext',
         img: canvId,
         onclick: function (ctx, img) {
             var ex = new BinaryImageExtension({

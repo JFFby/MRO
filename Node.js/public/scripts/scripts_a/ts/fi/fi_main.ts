@@ -11,7 +11,7 @@ module FI {
             $('.container, .tableWrapper').css('width','96%').css('max-width','none');
             var options = {
                 url: '/imgs',
-                path: 'public/imgs/a',
+                path: 'public/imgs/a/main/fi',
                 img: canvId,
                 defaultImg: eval("defaultImg"),
                 onclick: (ctx, img) => {

@@ -51,6 +51,7 @@ module FI {
                 arrRes = _.each(arrRes, i => {
                     return i.value = i.value / counts[i.key];
                 });
+                console.log(arrRes);
 
                 return _.max(arrRes, 'value').key;
             }
