@@ -10,9 +10,15 @@ namespace VitAn
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Default2",
+                url: "{action}",
+                defaults: new { controller = "A" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}",
-                defaults: new { controller = "A", action = "Determine", id = UrlParameter.Optional }
+                defaults: new { controller = "A", action = "Index"}
             );
         }
     }

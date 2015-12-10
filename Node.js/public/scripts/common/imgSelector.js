@@ -6,8 +6,9 @@
         defaultImg: null
     }
 
-    function setImg(value, canvas, ctx) {
+    function setImg(value, canvas, ctx, fullPath) {
         var img = new Image();
+        img.path = fullPath;
         img.src = value;
         img.onload = function () {
             canvas.width = img.width;
@@ -31,7 +32,7 @@
 
             $element.on('change', function () {
                 var value = $('option:selected', this).text();
-                img = setImg(value, canvas, ctx);
+                img = setImg(value, canvas, ctx, $('option:selected', this).data('path'));
             });
 
             $(options.btnId).on('click', function () {
@@ -47,11 +48,12 @@
                     data = JSON.parse(data);
                     var items = [];
                     $.each(data.files, function (i, item) {
+                        var fullPath = item;
                         item = item.replace(data.basePath, '').replace(new RegExp('[/\]', 'g'), '//');
                         items.push({ value: i, key: item });
                         $element
                             .append($('<option>', { value: i })
-                                .text(item));
+                                .text(item).data('path', fullPath));
                     });
 
                     if (options.defaultImg) {

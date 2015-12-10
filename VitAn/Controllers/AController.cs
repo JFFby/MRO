@@ -5,6 +5,11 @@ namespace VitAn.Controllers
 {
     public class AController : Controller
     {
+        public JsonResult Index()
+        {
+            return Json("Hello worl", JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Resize()
         {
             var service = new ImageService();
@@ -14,9 +19,10 @@ namespace VitAn.Controllers
 
         public JsonResult Determine(string path, bool resize = false)
         {
-
             var service = new ImageService();
-            return Json(service.Define(path, resize), JsonRequestBehavior.AllowGet);
+            return path == null 
+                ? Json("fail", JsonRequestBehavior.AllowGet) 
+                : Json(service.Define(path, resize), JsonRequestBehavior.AllowGet);
         }
     }
 }

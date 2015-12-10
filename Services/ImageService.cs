@@ -39,14 +39,14 @@ namespace Services
                 img.Resize(Config.Width, Config.Height, wo, ho);
             }
 
-            return new Img<ClassType>(img.Image, ClassType.Undefined);
+            return new CustomImage<ClassType>(img.Image, ClassType.Undefined);
         }
 
         public string Define(string targetImage, bool resize)
         {
             var img = resize
                 ? AdjustTargentImage(targetImage)
-                : new Img<ClassType>((Bitmap)Image.FromFile(targetImage), ClassType.Undefined);
+                : new CustomImage<ClassType>((Bitmap)Image.FromFile(targetImage), ClassType.Undefined);
 
             return (new Perceptron(Config.CountOfRElements, Config.ACount, Config.XCount)).DefineImage(img).ToString();
         }

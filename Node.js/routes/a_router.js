@@ -4,6 +4,7 @@ var formidable = require('formidable');
 var bugService = require('./../services/bugSevice');
 var fiService = require('./../services/fiService');
 var path = require('path');
+var request = require('request');
 
 var urlToFetchPreview = "/fetchPreview/";
 
@@ -21,6 +22,27 @@ router.get('/fi', function (req, res) {
 
 router.get('/bin', function (req, res) {
     res.render("./a/bin.jade");
+});
+
+router.get('/perc', function (req, res) {
+    res.render("./a/perceptrone.jade");
+});
+
+router.post('/perc/define', function (req, res) {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields) {
+        request.post(
+             'http://localhost:1220/Determine',
+             { form: { path: fields.data, resize: true } },
+             function (error, response, body) {
+                 console.log(body);
+                 if (!error && response.statusCode == 200) {
+                     res.write(body);
+                     res.end();
+                 }
+             }
+         );
+    });
 });
 
 router.post('/fi/save', function (req, res) {

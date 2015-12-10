@@ -51,6 +51,7 @@
     <Content Include="public\scripts\scripts_a\bug_a.js" />
     <Content Include="public\scripts\scripts_a\bug_a_main.js" />
     <Content Include="public\scripts\scripts_a\Colorizer.js" />
+    <Content Include="public\scripts\scripts_a\perceptrone.js" />
     <Content Include="public\scripts\scripts_a\Pixel_.js" />
     <Content Include="public\scripts\scripts_v\gridView.js" />
     <Content Include="public\scripts\scripts_v\knockout.simpleGrid.3.0.js" />
@@ -92,6 +93,7 @@
     <None Include="views\a\bug.jade" />
     <None Include="views\a\fi.jade" />
     <None Include="views\a\layout.jade" />
+    <None Include="views\a\perceptrone.jade" />
     <None Include="views\a\thining.jade" />
     <None Include="views\results.jade" />
   </ItemGroup>

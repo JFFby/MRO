@@ -1,6 +1,5 @@
 ﻿$(function () {
     var canvId = 'canv';
-    console.log('bin');
     $('.imgSelector').imgSelector({
         url: '/imgs',
         path: 'public/imgs/a/main/sourse',
