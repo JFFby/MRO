@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Configuration;
+using Domain.Lab_1;
+using Domain.Lab_1.Enums;
 using Domain.Resize;
 
 namespace Services
 {
-    public sealed class ImageSizeService
+    public sealed class ImageService
     {
         private readonly string path;
 
-        public ImageSizeService()
+        public ImageService()
         {
             this.path = ConfigurationManager.AppSettings["path"];
         }
@@ -21,6 +25,30 @@ namespace Services
             var localPath = pathMapper(path);
             var imgs = LoadImages(localPath);
             AdjustSize(imgs);
+        }
+
+        public Img<ClassType> AdjustTargentImage(string targetImage)
+        {
+            var img = new Img(targetImage);
+            if (img.Image.Height < Config.Height || img.Image.Width < Config.Width)
+            {
+                var dw = Config.Width - img.Image.Width;
+                var dh = Config.Height - img.Image.Height;
+                var wo = GetOffsets(dw);
+                var ho = GetOffsets(dh);
+                img.Resize(Config.Width, Config.Height, wo, ho);
+            }
+
+            return new Img<ClassType>(img.Image, ClassType.Undefined);
+        }
+
+        public string Define(string targetImage, bool resize)
+        {
+            var img = resize
+                ? AdjustTargentImage(targetImage)
+                : new Img<ClassType>((Bitmap)Image.FromFile(targetImage), ClassType.Undefined);
+
+            return (new Perceptron(Config.CountOfRElements, Config.ACount, Config.XCount)).DefineImage(img).ToString();
         }
 
         private IList<Img> LoadImages(string localPath)

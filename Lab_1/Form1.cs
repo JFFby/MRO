@@ -14,15 +14,13 @@ namespace Lab_1
         private readonly Perceptron perceptron;
         private readonly CustomImageHendler imgHendler;
         private TaskBar tb;
-
-        private int Lenght { get { return (int)Math.Sqrt(Perceptron.XCount); } }
-
+        
         public Form1()
         {
             InitializeComponent();
             var watch = new Stopwatch();
             watch.Start();
-            perceptron = new Perceptron(Config.CountOfRElements, 90, 225);
+            perceptron = new Perceptron(Config.CountOfRElements, Config.ACount, Config.XCount);
             InitializeGrid();
             imgHendler = new CustomImageHendler(Config.ImgFolder,
                 (b, c) => new CustomImage<ClassType>(b, c));
@@ -41,13 +39,13 @@ namespace Lab_1
 
         private void InitializeGrid()
         {
-            for (int i = 0; i < Lenght; i++)
+            for (int i = 0; i < Config.Width; i++)
             {
                 var j = i + 1;
                 dataGridView1.Columns.Add(j.ToString(), j.ToString());
             }
 
-            dataGridView1.Rows.Add(Lenght);
+            dataGridView1.Rows.Add(Config.Height);
             UpdateGridWidth();
         }
 
@@ -81,9 +79,9 @@ namespace Lab_1
             {
                 var watch = new Stopwatch();
                 watch.Start();
-                for (int i = 0; i < Lenght; i++)
+                for (int i = 0; i < Config.Height; i++)
                 {
-                    for (int j = 0; j < Lenght; j++)
+                    for (int j = 0; j < Config.Width; j++)
                     {
                         var val = img.PixelValue(i, j);
                         dataGridView1.Rows[i].Cells[j].Value = val;

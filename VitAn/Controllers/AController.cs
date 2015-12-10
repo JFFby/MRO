@@ -7,9 +7,16 @@ namespace VitAn.Controllers
     {
         public ActionResult Resize()
         {
-            var service = new ImageSizeService();
+            var service = new ImageService();
             service.AdjustImages(HttpContext.Server.MapPath);
-            return Json(new {success = true}, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Determine(string path, bool resize = false)
+        {
+
+            var service = new ImageService();
+            return Json(service.Define(path, resize), JsonRequestBehavior.AllowGet);
         }
     }
 }

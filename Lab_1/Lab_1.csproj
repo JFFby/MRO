@@ -93,10 +93,6 @@
     <EmbeddedResource Include="XTA.resx">
       <DependentUpon>XTA.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="perceptron.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="perceptron2.json" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
