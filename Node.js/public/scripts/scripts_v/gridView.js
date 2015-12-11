@@ -141,7 +141,8 @@ var convertation = function (array) {
             lowerLimit: sourse.MaxBottomPx.Y,
             height: sourse.Height,
             width: sourse.Width,
-            na: "N/A"
+            na: "N/A",
+            target: sourse.target
         });
     }
 

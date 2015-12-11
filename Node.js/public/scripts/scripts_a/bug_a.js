@@ -96,10 +96,22 @@
             }, 100);
         } else {
             var result = _.chain(objects).sortBy(function (e) {
-                return 0 - e.Pixels.length;
+                return 0 - e.Height;
             }).take(config.ObjectsPushToServer).toArray().value();
+            findNumbers(result);
             config.resultProcessor(result);
         }
+    }
+
+    var findNumbers = function (arr) {
+        var bigges = arr[0];
+        bigges.target = true;
+        for (var i = 1; i < 5; i++) {
+            if (Math.abs(arr[i].Height - bigges.Height) < 8) {
+                arr[i].target = true;
+            }
+        }
+
     }
 
     var getStartPixel = function () {

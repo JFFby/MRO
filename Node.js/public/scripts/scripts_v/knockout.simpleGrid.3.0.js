@@ -36,7 +36,7 @@
     // Templates used to render the grid
     var templateEngine = new ko.nativeTemplateEngine();
 
-    templateEngine.addTemplate = function(templateName, templateMarkup) {
+    templateEngine.addTemplate = function (templateName, templateMarkup) {
         document.write("<script type='text/html' id='" + templateName + "'>" + templateMarkup + "<" + "/script>");
     };
 
@@ -48,7 +48,7 @@
                             </tr>\
                         </thead>\
                         <tbody data-bind=\"template:{foreach: itemsOnCurrentPage, afterRender:afterRender}\">\
-                           <tr data-bind=\"foreach: $parent.columns\">\
+                            <tr data-bind=\"foreach: $parent.columns, css:{target: $data.target}\">\
                                <td data-bind=\"text: typeof rowText == 'function' ? rowText($parent) : $parent[rowText] \"></td>\
                             </tr>\
                         </tbody>\
@@ -64,7 +64,7 @@
 
     // The "simpleGrid" binding
     ko.bindingHandlers.simpleGrid = {
-        init: function() {
+        init: function () {
             return { 'controlsDescendantBindings': true };
         },
         // This method is called to initialize the node, and will also be called again if you change what the grid is bound to
@@ -72,11 +72,11 @@
             var viewModel = viewModelAccessor();
 
             // Empty the element
-            while(element.firstChild)
+            while (element.firstChild)
                 ko.removeNode(element.firstChild);
 
             // Allow the default templates to be overridden
-            var gridTemplateName      = allBindings.get('simpleGridTemplate') || "ko_simpleGrid_grid",
+            var gridTemplateName = allBindings.get('simpleGridTemplate') || "ko_simpleGrid_grid",
                 pageLinksTemplateName = allBindings.get('simpleGridPagerTemplate') || "ko_simpleGrid_pageLinks";
 
             // Render the main grid
