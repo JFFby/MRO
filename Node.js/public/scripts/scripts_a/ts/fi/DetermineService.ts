@@ -9,7 +9,28 @@ module FI {
                 return this.defineNumber();
             }
 
-            return 'Codes is Required';
+            return this.defineEmtyCodenumber();
+        }
+
+        private defineEmtyCodenumber() {
+            var numbers = [];
+            var values = this.generateNumbers();
+            for (var i in this.obj)
+                if (this.obj.hasOwnProperty(i) && i.length > 8) {
+                    numbers = numbers.concat(this.obj[i]);
+                }
+
+            var result = _.difference(values, numbers);
+            return result ? result[0] : 'undefined';
+        }
+
+        private generateNumbers() {
+            var result = [];
+            for (var i = 0; i < 10; i++) {
+                result.push(i.toString());
+            }
+
+            return result;
         }
 
         private defineNumber() {

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using Domain.Lab_1;
 
 namespace Lab_1
@@ -16,11 +17,19 @@ namespace Lab_1
 
         private void ItnitGtid()
         {
+            var width = (int) Math.Floor((float)65530/perceptron.aElements.Count);
             for (int i = 0; i < perceptron.aElements.Count; i++)
             {
                 var element = perceptron.aElements[i];
                 var name = GetColName(element.Id);
-                dataGridView1.Columns.Add(name, name);
+                var column = new DataGridViewColumn()
+                {
+                    FillWeight = width,
+                    HeaderText = name,
+                    Name = name,
+                    CellTemplate = new DataGridViewTextBoxCell()
+                };
+                dataGridView1.Columns.Add(column);
 
                 if (i == 0)
                 {

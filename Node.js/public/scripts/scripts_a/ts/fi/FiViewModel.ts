@@ -24,7 +24,7 @@ module FI {
             this.cellItemCach = [];
             this.hElements = ko.observableArray<HElement>([]);
             this.showTable = ko.observable(false);
-            this.lerning = ko.observable(true);
+            this.lerning = ko.observable(false);
             this.spinervisible = ko.observable(false);
             this.showTable.subscribe((value) => {
                 if (value) {
