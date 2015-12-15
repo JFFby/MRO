@@ -247,7 +247,7 @@ module FI {
                     return Math.sqrt(2);
                     break;
                 default:
-                    throw new Error("wrong argiment");
+                    throw new Error("wrong argument");
             }
         }
     }

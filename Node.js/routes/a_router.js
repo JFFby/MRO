@@ -5,6 +5,7 @@ var bugService = require('./../services/bugSevice');
 var fiService = require('./../services/fiService');
 var path = require('path');
 var request = require('request');
+var needle = require('needle');
 
 var urlToFetchPreview = "/fetchPreview/";
 
@@ -30,18 +31,32 @@ router.get('/perc', function (req, res) {
 
 router.post('/perc/define', function (req, res) {
     var form = new formidable.IncomingForm();
-    form.parse(req, function (err, fields) {
-        request.post(
-             'http://localhost:1220/Determine',
-             { form: { path: fields.data, resize: true } },
-             function (error, response, body) {
-                 console.log(body);
-                 if (!error && response.statusCode == 200) {
-                     res.write(body);
-                     res.end();
-                 }
-             }
-         );
+    form.parse(req, function(err, fields) {
+        //request.post(
+        //     'http://localhost:1220/Determine',
+        //     { form: { path: fields.data, resize: true } },
+        //     function (error, response, body) {
+        //         console.log(body);
+        //         if (!error && response.statusCode == 200) {
+        //             res.write(body);
+        //             res.end();
+        //         } else {
+        //             res.write('fali');
+        //             res.end();
+        //         }
+        //     }
+        // );
+        needle.post('http://localhost:1220/Determine', { path: fields.data, resize: true },
+            function(error, response, body) {
+                console.log(body);
+                if (!error && response.statusCode == 200) {
+                    res.write(body);
+                    res.end();
+                } else {
+                    res.write('fali');
+                    res.end();
+                }
+            });
     });
 });
 
