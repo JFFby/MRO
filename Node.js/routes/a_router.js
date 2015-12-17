@@ -9,6 +9,10 @@ var needle = require('needle');
 
 var urlToFetchPreview = "/fetchPreview/";
 
+var options = {
+    open_timeout: 20000
+}
+
 router.get('/bug', function (req, res) {
     res.render("./a/bug.jade");
 });
@@ -46,7 +50,7 @@ router.post('/perc/define', function (req, res) {
         //         }
         //     }
         // );
-        needle.post('http://localhost:1220/Determine', { path: fields.data, resize: true },
+        needle.post('http://localhost:1220/Determine', { path: fields.data, resize: true }, options,
             function(error, response, body) {
                 console.log(body);
                 if (!error && response.statusCode == 200) {
